@@ -23,10 +23,17 @@ const getUserList = async (): Promise<UserDocument[]> => {
   return User.find();
 };
 
+const findUserByEmail = async (
+  userEmail: string
+): Promise<UserDocument | null> => {
+  return User.findOne({ email: userEmail });
+};
+
 export default {
   getUserById,
   getUserList,
   createUser,
   deleteUserById,
   updateUser,
+  findUserByEmail,
 };

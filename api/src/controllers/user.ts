@@ -5,12 +5,16 @@ import UserServices from '../services/user';
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
+    const {userName, email, password} = req.body
+    const userExist = await User.findOne({email})
+    if(userExist) {
+      return res.status(400).json('This email exists')
+    }
+
     const newUser = new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      DOB: req.body.DOB,
+      userName: req.body.userName,
       email: req.body.email,
-      password: req.body.password,
+      password: req.body.password
     });
     const user = await UserServices.createUser(newUser);
     res.status(200).json(user);

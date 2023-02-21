@@ -3,11 +3,10 @@ import mongoose, { Document } from 'mongoose';
 export type UserDocument = Document & {
   date: Date;
   userId: string;
-  firstName: string;
-  lastName: string;
-  DOB: Date;
+  userName: string;
   email: string;
   password: string;
+  isAdmin: boolean;
 };
 
 const Schema = mongoose.Schema;
@@ -19,16 +18,8 @@ const UserSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
   },
-  firstName: {
+  userName: {
     type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-  DOB: {
-    type: Date,
     required: true,
   },
   email: {
@@ -40,6 +31,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  }
 });
 
 export default mongoose.model<UserDocument>('User', UserSchema);

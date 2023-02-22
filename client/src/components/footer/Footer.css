@@ -17,37 +17,37 @@
 }
 
 .subscription-field {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 input {
-    margin-right: 1.5rem;
-    height: 25px;
-    border: 1px solid black;
-    font-size:20px;
+  margin-right: 1.5rem;
+  height: 25px;
+  border: 1px solid black;
+  font-size: 20px;
 }
 
 input:focus {
-    outline: 2px solid black;  
+  outline: 2px solid black;
 }
 
 .join-btn {
-    background-color: black;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    border: 1px solid black;
-    width: 9rem;
-    height: 2.2rem;
-    border-radius: 20px;
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  border: 1px solid black;
+  width: 9rem;
+  height: 2.2rem;
+  border-radius: 20px;
 }
 
 .footer {
   padding-top: 3rem;
   display: flex;
   justify-content: center;
-  color: #8B0000;
+  color: #8b0000;
   margin-bottom: 3rem;
 }
 
@@ -59,9 +59,10 @@ input:focus {
 .footer-bottom {
   display: flex;
   align-items: center;
-  color: #8B0000;
+  color: #8b0000;
 }
 
-.footer-bottom h1 {
-  margin-right: 3rem;
+.footer-bottom h1,
+.footer-bottom p {
+  margin-right: 2.5rem;
 }

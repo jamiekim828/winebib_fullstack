@@ -1,38 +1,35 @@
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
 
 import User from '../models/User';
 import UserServices from '../services/user';
-
-dotenv.config();
-const JWT_SECRET = process.env.JWT_SECRET as string;
+import { generateToken } from '../utils/generateToken';
 
 export const logInWithPassword = async (
   request: Request,
   response: Response
 ) => {
   try {
-    // get user information from database
     const userData = await UserServices.findUserByEmail(request.body.email);
-    // if no user data
+
     if (!userData) {
       response.json({ message: `cant find user email ${request.body.email}` });
       return;
     }
-    console.log(userData);
-    // if user -> check email and password match
-    const token = jwt.sign(
-      {
-        email: request.body.email,
-      },
-      JWT_SECRET,
-      {
-        expiresIn: '1h',
-      }
-    );
 
-    response.json({
+    const plainPassword = request.body.password;
+    const passwordDatabase = userData.password;
+
+    const match = await bcrypt.compare(plainPassword, passwordDatabase);
+    
+    if (!match) {
+      response.json({ message: 'wrong password' });
+      return;
+    }
+
+    const token = generateToken(userData.email);
+    
+    response.status(200).json({
       userData: {
         _id: userData._id,
         userName: userData.userName,
@@ -48,18 +45,24 @@ export const logInWithPassword = async (
 
 export const createUserController = async (req: Request, res: Response) => {
   try {
-    const { email } = req.body;
+    const { email, password } = req.body;
+
     const userExist = await User.findOne({ email });
     if (userExist) {
       return res.status(400).json('This email exists');
     }
 
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const newUser = new User({
       userName: req.body.userName,
-      email: req.body.email,
-      password: req.body.password,
+      email: email,
+      password: hashedPassword,
     });
+
     const user = await UserServices.createUser(newUser);
+
     res.status(200).json({
       _id: user._id,
       userName: user.userName,

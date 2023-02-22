@@ -1,0 +1,21 @@
+.user-page {
+    padding: 5rem;
+}
+
+.user-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.login-div {
+    font-size: 1.5rem;
+    width: 40%;
+    padding-right: 3rem;
+    border-right: 1px solid black
+}
+
+.register-div {
+    font-size: 1.5rem;
+    margin-left: 3rem;
+    width: 40%;
+}

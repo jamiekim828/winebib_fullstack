@@ -1,10 +1,21 @@
-import React from 'react';
-import {Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { Button } from '@mui/material';
 
 import './UserLogIn.css';
-import { User } from '../../types/type';
+import { User, UserData } from '../../types/type';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { loginUserThunk } from '../../redux/thunks/user';
 
 const LogInSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Email is required'),
@@ -36,18 +47,55 @@ const RegisterSchema = Yup.object().shape({
 });
 
 export default function UserLogIn() {
+  const [register, setRegister] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>('');
+  const [open, setOpen] = useState<boolean>(false);
+  const [thisUser, setThisUser] = useState<UserData>({
+    _id: '',
+    userName: '',
+    email: '',
+    isAdmin: false,
+  });
+
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
   const loginHandler = (user: User) => {
-    if (user) {
-    }
     if (!user) {
+      return;
+    }
+    if (user) {
+      dispatch(loginUserThunk(user));
+      navigate('/user');
+    }
+  };
+  const url = 'http://localhost:8000/user';
+  const registerHandler = (user: User) => {
+    if (!user) {
+      return;
+    }
+    if (user) {
+      // dispatch(registerUserThunk(user))
+      axios
+        .post(url, user)
+        .then((res) => {
+          console.log(res.data);
+          setThisUser(res.data);
+          setMessage('You are registered. Please log in.');
+          setOpen(true);
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+          setMessage(err.response.data);
+          setOpen(true);
+        });
+      setRegister(true);
     }
   };
 
-  const registerHandler = (user: User) => {
-    if (user) {
-    }
-    if (!user) {
-    }
+  const handleClose = () => {
+    setOpen(false);
+
   };
 
   return (
@@ -68,12 +116,28 @@ export default function UserLogIn() {
           >
             {({ errors, touched, handleChange }) => (
               <Form className='login'>
-                <input placeholder='E-mail' onChange={handleChange} />
-                {errors.email && touched.email ? (<p className='input-error'>*{errors.email}</p>) : null}
-                <input placeholder='password' onChange={handleChange} />
-                {errors.password && touched.password ? (<p className='input-error'>*{errors.password}</p>) : null}
-                <button>Log in</button>
-                <Link to='/help' className='password-forget'>Forgot password?</Link>
+                <input
+                  placeholder='E-mail'
+                  type='email'
+                  name='email'
+                  onChange={handleChange}
+                />
+                {errors.email && touched.email ? (
+                  <p className='input-error'>*{errors.email}</p>
+                ) : null}
+                <input
+                  placeholder='password'
+                  type='text'
+                  name='password'
+                  onChange={handleChange}
+                />
+                {errors.password && touched.password ? (
+                  <p className='input-error'>*{errors.password}</p>
+                ) : null}
+                <button type='submit'>Log in</button>
+                <Link to='/help' className='password-forget'>
+                  Forgot password?
+                </Link>
               </Form>
             )}
           </Formik>
@@ -94,15 +158,63 @@ export default function UserLogIn() {
           >
             {({ errors, touched, handleChange }) => (
               <Form className='register'>
-                <input placeholder='Name' onChange={handleChange} />
-                {errors.userName && touched.userName ? (<p className='input-error'>*{errors.userName}</p>) : null}
-                <input placeholder='E-mail' onChange={handleChange} />
-                {errors.email && touched.email ? (<p className='input-error'>*{errors.email}</p>) : null}
-                <input placeholder='password' onChange={handleChange} />
-                {errors.password && touched.password ? (<p className='input-error'>*{errors.password}</p>) : null}
-                <input placeholder='confirm password' onChange={handleChange} />
-                {errors.confirmPassword && touched.confirmPassword ? (<p className='input-error'>*{errors.confirmPassword}</p>) : null}
-                <button>Register</button>
+                <input
+                  placeholder='Name'
+                  type='userName'
+                  name='userName'
+                  onChange={handleChange}
+                />
+                {errors.userName && touched.userName ? (
+                  <p className='input-error'>*{errors.userName}</p>
+                ) : null}
+                <input
+                  placeholder='E-mail'
+                  type='email'
+                  name='email'
+                  onChange={handleChange}
+                />
+                {errors.email && touched.email ? (
+                  <p className='input-error'>*{errors.email}</p>
+                ) : null}
+                <input
+                  placeholder='password'
+                  type='text'
+                  name='password'
+                  onChange={handleChange}
+                />
+                {errors.password && touched.password ? (
+                  <p className='input-error'>*{errors.password}</p>
+                ) : null}
+                <input
+                  placeholder='confirm password'
+                  type='text'
+                  name='confirmPassword'
+                  onChange={handleChange}
+                />
+                {errors.confirmPassword && touched.confirmPassword ? (
+                  <p className='input-error'>*{errors.confirmPassword}</p>
+                ) : null}
+                <button type='submit'>Register</button>
+                <div>
+                  <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby='alert-dialog-title'
+                    aria-describedby='alert-dialog-description'
+                  >
+                    <DialogTitle id='alert-dialog-title'>Message</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id='alert-dialog-description'>
+                        {message}
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleClose} autoFocus>
+                        Close
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </div>
               </Form>
             )}
           </Formik>

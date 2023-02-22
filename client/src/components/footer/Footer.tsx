@@ -19,7 +19,6 @@ export default function Footer() {
         </p>
         <div className='subscription-field'>
           <input type='email' placeholder='E-mail' />
-          <input type='password' placeholder='Password' />
           <button className='join-btn'>Join now</button>
         </div>
       </div>

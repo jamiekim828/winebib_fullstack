@@ -67,3 +67,15 @@
     margin-top: 3px;
     font-size: .9rem;
 }
+
+.after-register h4 {
+  color:  #8b0000;
+  font-size: 18px;
+  margin-bottom: 0px;
+}
+
+.after-register p {
+  font-size: 15px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}

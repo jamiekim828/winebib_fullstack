@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -15,7 +15,7 @@ import './UserLogIn.css';
 import { User, UserData } from '../../types/type';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
-import { loginUserThunk } from '../../redux/thunks/user';
+import { userActions } from '../../redux/slices/user';
 
 const LogInSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Email is required'),
@@ -31,8 +31,8 @@ const LogInSchema = Yup.object().shape({
 const RegisterSchema = Yup.object().shape({
   userName: Yup.string()
     .min(1, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Please enter your first name'),
+    .max(20, 'Too Long!')
+    .required('Please enter your full name'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   password: Yup.string()
     .min(6, 'Password must be at least 6 characters')
@@ -51,7 +51,7 @@ export default function UserLogIn() {
   const [message, setMessage] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   const [thisUser, setThisUser] = useState<UserData>({
-    _id: '',
+    id: '',
     userName: '',
     email: '',
     isAdmin: false,
@@ -59,33 +59,48 @@ export default function UserLogIn() {
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const url = 'http://localhost:8000/user';
 
   const loginHandler = (user: User) => {
     if (!user) {
       return;
     }
     if (user) {
-      dispatch(loginUserThunk(user));
-      navigate('/user');
+      axios
+        .post(`${url}/login`, user)
+        .then((res) => {
+          const data = res.data.userData;
+          const token = res.data.token;
+          localStorage.setItem('userToken', token);
+          dispatch(userActions.getLoginUser(data));
+          if(token) {
+            navigate('/account');
+          } else {
+            setMessage(`Login failed. ${res.data.message}.`)
+            setOpen(true)
+          }
+          
+        })
+        .catch((err) => {
+          setMessage(err.response.data);
+          setOpen(true);
+        });
     }
   };
-  const url = 'http://localhost:8000/user';
+
   const registerHandler = (user: User) => {
     if (!user) {
       return;
     }
     if (user) {
-      // dispatch(registerUserThunk(user))
       axios
         .post(url, user)
         .then((res) => {
-          console.log(res.data);
           setThisUser(res.data);
-          setMessage('You are registered. Please log in.');
+          setMessage('Cheers! You are registered. Please log in.');
           setOpen(true);
         })
         .catch((err) => {
-          console.log(err.response.data);
           setMessage(err.response.data);
           setOpen(true);
         });
@@ -95,7 +110,6 @@ export default function UserLogIn() {
 
   const handleClose = () => {
     setOpen(false);
-
   };
 
   return (
@@ -144,6 +158,11 @@ export default function UserLogIn() {
         </div>
         <div className='register-div'>
           <h3>Register</h3>
+          <div className='after-register'>
+            <h4>You'll be able to :</h4>
+            <p>✔️ ACCESS YOUT ORDER HISTORY</p>
+            <p>✔️ SAVE ITEMS TO YOUR WISH LIST</p>
+          </div>
           <Formik
             initialValues={{
               userName: '',
@@ -195,7 +214,11 @@ export default function UserLogIn() {
                   <p className='input-error'>*{errors.confirmPassword}</p>
                 ) : null}
                 <button type='submit'>Register</button>
-                <div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+        <div>
                   <Dialog
                     open={open}
                     onClose={handleClose}
@@ -215,10 +238,6 @@ export default function UserLogIn() {
                     </DialogActions>
                   </Dialog>
                 </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
       </div>
     </div>
   );

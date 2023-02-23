@@ -13,7 +13,7 @@ export const logInWithPassword = async (
     const userData = await UserServices.findUserByEmail(request.body.email);
 
     if (!userData) {
-      response.json({ message: `cant find user email ${request.body.email}` });
+      response.json({ message: `"${request.body.email}" is not registered yet` });
       return;
     }
 
@@ -31,7 +31,7 @@ export const logInWithPassword = async (
     
     response.status(200).json({
       userData: {
-        _id: userData._id,
+        id: userData._id,
         userName: userData.userName,
         email: userData.email,
         isAdmin: userData.isAdmin,
@@ -49,7 +49,7 @@ export const createUserController = async (req: Request, res: Response) => {
 
     const userExist = await User.findOne({ email });
     if (userExist) {
-      return res.status(400).json('This email exists');
+      return res.status(400).json('This email already exists');
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -64,7 +64,7 @@ export const createUserController = async (req: Request, res: Response) => {
     const user = await UserServices.createUser(newUser);
 
     res.status(200).json({
-      _id: user._id,
+      id: user._id,
       userName: user.userName,
       email: user.email,
       isAdmin: user.isAdmin,
@@ -98,11 +98,27 @@ export const updateUserByIdController = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
     const update = req.body;
-    const updateUser = await UserServices.updateUser(userId, update);
+    const user = await UserServices.getUserById(userId)
+
+    if(!user) {
+      return;
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(update.password, salt);
+    
+    const newUserInfo = {
+      userName: update.username,
+      password: hashedPassword,
+      email: user.email,
+    }
+
+    const updateUser = await UserServices.updateUser(userId, newUserInfo);
     // .select
     // need to be fixed
     res.status(200).json(updateUser);
   } catch (err) {
+    console.log(err)
     res.status(500).json('Server error');
   }
 };

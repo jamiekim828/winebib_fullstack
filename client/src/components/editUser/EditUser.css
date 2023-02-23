@@ -1,0 +1,16 @@
+.edit-div {
+  display: flex;
+  flex-direction: column;
+  margin-right: 0px;
+}
+
+.update-btn {
+  border: 1px solid darkred;
+  background-color: darkred;
+  color: white;
+  font-size: 17px;
+  width: 9rem;
+  height: 2rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}

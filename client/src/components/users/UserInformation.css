@@ -1,0 +1,48 @@
+.user-div {
+  height: 60vh;
+  padding-left: 5rem;
+}
+
+.user-empty {
+  height: 50vh;
+  padding-left: 5rem;
+  font-size: 17px;
+}
+
+.userinfo-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.logout-btn,
+.edit-btn {
+  border: 1px solid black;
+  background-color: black;
+  color: white;
+  font-size: 17px;
+  width: 9rem;
+  height: 2rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.logout-btn:hover,
+.edit-btn:hover {
+    border: 1px solid lightgrey;
+    background-color: lightgrey;
+    color: black;
+}
+
+.info {
+    font-size: 20px;
+}
+
+.my-account-div {
+    display: flex;
+}
+
+.account,
+.history {
+    width: 240px;
+    margin-left: 7rem;
+}

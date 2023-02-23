@@ -1,12 +1,12 @@
 export type User = {
   userName?: string;
-  email: string;
+  email?: string;
   password: string;
   confirmPassword?: string;
 };
 
 export type UserData = {
-  _id: string;
+  id: string;
   email: string;
   userName: string;
   isAdmin: boolean;

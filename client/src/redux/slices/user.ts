@@ -18,7 +18,7 @@ const initialState: InitialState = {
   },
   users: [],
   loginUser: {
-    _id: '',
+    id: '',
     userName: '',
     email: '',
     isAdmin: false

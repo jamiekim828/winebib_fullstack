@@ -1,23 +1,31 @@
 .wine-img {
-    height: 12rem;
-    margin-left: 3rem;
+  height: 12rem;
+  margin-left: 3rem;
 }
 
 .wine-name {
-    color: darkred;
-    font-size: 18px;
-    font-weight: 800;
+  color: darkred;
+  font-size: 18px;
+  font-weight: 800;
 }
 
 .wine-detail {
-    padding-left: .6rem;
-    padding-right: .5rem;
-    display: flex;
-    justify-content: space-between;
+  padding-left: 0.6rem;
+  padding-right: 0.5rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .wine-price {
-    display: flex;
-    align-items: flex-end;
-    font-weight: 600;
+  display: flex;
+  align-items: flex-end;
+  font-weight: 600;
+}
+
+.add-cart {
+    opacity: 0;
+}
+
+.wine-img-div:hover .add-cart {
+    opacity: 1;
 }

@@ -19,6 +19,10 @@ const getProductList = async (): Promise<ProductDocument[]> => {
   return Product.find();
 };
 
+const getProductById = async (id: string): Promise<ProductDocument | null> => {
+  return Product.findById(id);
+};
+
 const deleteProductById = async (
   id: string
 ): Promise<ProductDocument | null> => {
@@ -30,4 +34,5 @@ export default {
   updateProductById,
   getProductList,
   deleteProductById,
+  getProductById
 };

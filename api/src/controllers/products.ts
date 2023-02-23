@@ -27,15 +27,25 @@ export const createProductController = async (req: Request, res: Response) => {
   }
 };
 
-export const getProductListController = async (
-  req: Request,
-  res: Response
-) => {
+export const getProductListController = async (req: Request, res: Response) => {
   try {
     const productList = await ProductServices.getProductList();
     res.status(200).json(productList);
   } catch (err) {
     res.status(404).json('Products not found');
+  }
+};
+
+export const getProductByIdController = async (req: Request, res: Response) => {
+  try {
+    const productId = req.params.productId
+    const data = await ProductServices.getProductById(productId)
+    if(!data) {
+      res.status(404).json('Product not found')
+    }
+    res.status(200).json(data)
+  } catch (err) {
+    res.status(500).json('Server error');
   }
 };
 
@@ -68,3 +78,4 @@ export const deleteProductByIdController = async (
     res.status(404).json('Product not found');
   }
 };
+

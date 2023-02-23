@@ -12,7 +12,6 @@ import WineDetail from './WineDetail';
 export default function WineList() {
   const colWidth = { xs: 12, sm: 6, md: 4, lg: 3 };
   const wineList = useSelector((state: RootState) => state.wine.wine);
-  console.log(wineList);
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {

@@ -2,7 +2,7 @@ import mongoose, { Document } from 'mongoose';
 
 export type UserDocument = Document & {
   date: Date;
-  userId: string;
+  _id: string;
   userName: string;
   email: string;
   password: string;
@@ -15,7 +15,7 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-  userId: {
+  _id: {
     type: Schema.Types.ObjectId,
   },
   userName: {

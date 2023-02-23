@@ -6,7 +6,7 @@ export type User = {
 };
 
 export type UserData = {
-  id: string;
+  _id: string;
   email: string;
   userName: string;
   isAdmin: boolean;

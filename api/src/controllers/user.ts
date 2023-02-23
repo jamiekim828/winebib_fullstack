@@ -31,7 +31,7 @@ export const logInWithPassword = async (
     
     response.status(200).json({
       userData: {
-        id: userData._id,
+        _id: userData._id,
         userName: userData.userName,
         email: userData.email,
         isAdmin: userData.isAdmin,
@@ -64,7 +64,7 @@ export const createUserController = async (req: Request, res: Response) => {
     const user = await UserServices.createUser(newUser);
 
     res.status(200).json({
-      id: user._id,
+      _id: user._id,
       userName: user.userName,
       email: user.email,
       isAdmin: user.isAdmin,

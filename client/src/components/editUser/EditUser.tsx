@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import axios, { AxiosError } from 'axios';
-import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -13,7 +13,7 @@ import { Button } from '@mui/material';
 
 import './EditUser.css';
 import { User, UserData } from '../../types/type';
-import { AppDispatch } from '../../redux/store';
+import { AppDispatch, RootState } from '../../redux/store';
 import { getUserById } from '../../redux/thunks/user';
 
 const EditSchema = Yup.object().shape({
@@ -36,17 +36,24 @@ type Prop = {
 };
 
 export default function EditUser({ user, setEditOpen }: Prop) {
+  const loginUser = useSelector((state: RootState) => state.user.loginUser);
   const [open, setOpen] = useState<boolean>(false);
   const [warning, setWarning] = useState<string>('');
-  const url = `http://localhost:8000/user/${user.id}`;
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(getUserById(user._id));
+  }, [dispatch, user._id]);
+
   const editHandler = (newInfo: User) => {
     const userToken = localStorage.getItem('userToken');
+    const url = `http://localhost:8000/user/${user._id}`;
+    
     axios
       .put(url, newInfo, { headers: { Authorization: `Bearer ${userToken}` } })
       .then((res) => {
         if (res.status === 200) {
-          dispatch(getUserById(user.id));
+          dispatch(getUserById(user._id));
           setWarning('Succesfully updated!');
           setOpen(true);
         }

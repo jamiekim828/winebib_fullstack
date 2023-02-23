@@ -51,7 +51,7 @@ export default function UserLogIn() {
   const [message, setMessage] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   const [thisUser, setThisUser] = useState<UserData>({
-    id: '',
+    _id: '',
     userName: '',
     email: '',
     isAdmin: false,

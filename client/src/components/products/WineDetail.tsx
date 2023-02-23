@@ -45,7 +45,7 @@ export default function WineDetail({ wine }: Prop) {
         </p>
       </div>
       <div className='wine-price'>
-        <p>${wine.price}</p>
+        <p>${wine.price.toFixed(2)}</p>
       </div>
     </div>
   );

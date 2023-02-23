@@ -37,9 +37,11 @@ export function ProductDescription() {
     </Typography>,
   ];
 
+  const salePrice = wine.price * 80/100
+
   return (
     <div className='description-div'>
-        <Breadcrumbs separator="›" aria-label="breadcrumb">
+        <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{marginBottom:'2rem'}}>
         {breadcrumbs}
       </Breadcrumbs>
       <div className='flex'>
@@ -90,6 +92,9 @@ export function ProductDescription() {
             <p style={{ width: '70px' }}>sweet</p>
             <Rating name='read-only' value={wine.sweet} readOnly />
           </div>
+          <div><p>Price : ${wine.price.toFixed(2)} [Register and pay only $ {salePrice.toFixed(2)}]</p></div>
+          <button className='wish-btn'>Wishlist</button>
+          <button className='add-btn'>Add to cart</button>
         </div>
       </div>
     </div>

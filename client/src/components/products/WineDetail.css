@@ -1,0 +1,23 @@
+.wine-img {
+    height: 12rem;
+    margin-left: 3rem;
+}
+
+.wine-name {
+    color: darkred;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.wine-detail {
+    padding-left: .6rem;
+    padding-right: .5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.wine-price {
+    display: flex;
+    align-items: flex-end;
+    font-weight: 600;
+}

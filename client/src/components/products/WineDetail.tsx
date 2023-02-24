@@ -1,16 +1,32 @@
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
 import './WineDetail.css';
 import { Wine } from '../../types/type';
-import { Link } from 'react-router-dom';
+import { AppDispatch } from '../../redux/store';
+import { cartActions } from '../../redux/slices/cart';
 
 type Prop = {
   wine: Wine;
 };
 
 export default function WineDetail({ wine }: Prop) {
+  const dispatch = useDispatch<AppDispatch>()
+  const addToCart = (product: Wine) => {
+    dispatch(
+      cartActions.addToCartAction({
+        productId: product._id,
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        quantity: 1,
+      })
+    );
+  };
+
   return (
     <div className='wine-detail'>
       <div>
@@ -30,6 +46,7 @@ export default function WineDetail({ wine }: Prop) {
               aria-label='add'
             >
               <AddIcon
+                onClick={()=>addToCart(wine)}
                 sx={{
                   color: 'white',
                   '&:hover': {

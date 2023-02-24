@@ -50,12 +50,6 @@ export default function UserLogIn() {
   const [register, setRegister] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
-  const [thisUser, setThisUser] = useState<UserData>({
-    _id: '',
-    userName: '',
-    email: '',
-    isAdmin: false,
-  });
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -96,7 +90,6 @@ export default function UserLogIn() {
       axios
         .post(url, user)
         .then((res) => {
-          setThisUser(res.data);
           setMessage('Cheers! You are registered. Please log in.');
           setOpen(true);
         })

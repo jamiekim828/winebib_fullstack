@@ -1,18 +1,25 @@
 import { Request, Response } from 'express';
 
 import Order from '../models/Order';
+import User from '../models/User';
 import OrderServices from '../services/Order';
 
 export const createOrderController = async (req: Request, res: Response) => {
   try {
+    const orderData = req.body;
+    const user = await User.findById(req.params.userId)
+
+    if(!user) {
+      return res.status(404).json('Something went wrong. Did you login?')
+    }
     const newOrder = new Order({
-      uerId: req.params.userId,
-      // productOrder: req.body,
+      ...orderData, userId: user._id
     });
+    
     const order = await OrderServices.createOrder(newOrder);
-    res.status(200).json(order);
+    return res.status(200).json(order);
   } catch (err) {
-    res.status(500).json('server error');
+    res.status(500).json('Sorry, server error')
   }
 };
 
@@ -31,6 +38,13 @@ export const getOrderListByUserIdController = async (
 ) => {
   try {
     const userId = req.params.userId;
+
+    const user = await User.findById(req.params.userId)
+
+    if(!user) {
+      return res.status(404).json('Something went wrong. Did you login?')
+    }
+    
     const orderList = await OrderServices.getOrderListByUserId( userId );
     res.status(200).json(orderList);
   } catch (err) {

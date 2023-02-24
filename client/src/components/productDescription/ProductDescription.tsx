@@ -10,6 +10,8 @@ import Link from '@mui/material/Link';
 import './ProductDescription.css';
 import { AppDispatch, RootState } from '../../redux/store';
 import { getOneWineThunk } from '../../redux/thunks/wine';
+import { Wine } from '../../types/type';
+import { cartActions } from '../../redux/slices/cart';
 
 export function ProductDescription() {
   const wine = useSelector((state: RootState) => state.wine.oneWine);
@@ -20,26 +22,36 @@ export function ProductDescription() {
   }, [dispatch, id]);
 
   const breadcrumbs = [
-    <Link underline="hover" key="1" color="inherit" href="/" >
+    <Link underline='hover' key='1' color='inherit' href='/'>
       HOME
     </Link>,
-    <Link
-      underline="hover"
-      key="2"
-      color="inherit"
-      href="/all-wine"
-      
-    >
+    <Link underline='hover' key='2' color='inherit' href='/all-wine'>
       ALL WINE
     </Link>,
-    <Typography key="3" color="text.primary">
+    <Typography key='3' color='text.primary'>
       {wine.name}
     </Typography>,
   ];
 
+  const addToCart = (product: Wine) => {
+    dispatch(
+      cartActions.addToCartAction({
+        productId: product._id,
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        quantity: 1,
+      })
+    );
+  };
+
   return (
     <div className='description-div'>
-        <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{marginBottom:'2rem'}}>
+      <Breadcrumbs
+        separator='›'
+        aria-label='breadcrumb'
+        sx={{ marginBottom: '2rem' }}
+      >
         {breadcrumbs}
       </Breadcrumbs>
       <div className='flex'>
@@ -65,7 +77,11 @@ export function ProductDescription() {
               </p>
             ))}
           </div>
-          <div><p>{wine.color}&nbsp;wine&nbsp;{wine.capacity}ml</p></div>
+          <div>
+            <p>
+              {wine.color}&nbsp;wine&nbsp;{wine.capacity}ml
+            </p>
+          </div>
           <div className='flex'>
             <p>Usage&nbsp;:&nbsp;</p>
             {wine.use.map((u, index) => (
@@ -90,9 +106,13 @@ export function ProductDescription() {
             <p style={{ width: '70px' }}>sweet</p>
             <Rating name='read-only' value={wine.sweet} readOnly />
           </div>
-          <div><p>Price : ${wine.price.toFixed(2)}</p></div>
+          <div>
+            <p>Price : ${wine.price.toFixed(2)}</p>
+          </div>
           <button className='wish-btn'>Wishlist</button>
-          <button className='add-btn'>Add to cart</button>
+          <button className='add-btn' onClick={() => addToCart(wine)}>
+            Add to cart
+          </button>
         </div>
       </div>
     </div>

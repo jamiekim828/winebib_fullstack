@@ -43,6 +43,6 @@
 
 .account,
 .history {
-    width: 240px;
+    width: auto;
     margin-left: 7rem;
 }

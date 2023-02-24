@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import wineReducer from './slices/wine';
-import userReducer from './slices/user'
+import userReducer from './slices/user';
+import cartReducer from './slices/cart';
 
 const store = configureStore({
   reducer: {
     wine: wineReducer,
-    user: userReducer
+    user: userReducer,
+    cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

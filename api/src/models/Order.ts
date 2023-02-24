@@ -1,32 +1,43 @@
 import mongoose, { Document } from 'mongoose';
 
 import User from './User';
-import Product from './Product';
 
 export type OrderDocument = Document & {
+  
   date: Date;
   userId: string;
-  address: string[];
+  address: string;
   orders: [];
-  isDelivered: boolean;
+  total: number;
+  isDelivered: string;
 };
 
 const Schema = mongoose.Schema;
 const OrderSchema = new Schema({
+  
   date: {
     type: Date,
     default: Date.now(),
   },
   userId: {
     type: Schema.Types.ObjectId,
-    ref: User,
+    ref: 'User',
   },
-  address: {
-    type: [String],
-  },
-  orders: [{ type: Product.schema }],
+  address: String,
+  orders: [
+    {
+      productId: Schema.Types.ObjectId,
+      name: String,
+      image: String,
+      price: Number,
+      quantity: Number
+    },
+  ],
+  total: Number,
   isDelivered: {
-    type: Boolean,
+    type: String,
+    enum: ['Prepare', 'shipped', 'Delivered'],
+    default: 'Prepare',
   },
 });
 

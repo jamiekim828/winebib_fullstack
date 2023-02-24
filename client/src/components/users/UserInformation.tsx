@@ -1,14 +1,37 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 import './UserInformation.css';
-import { RootState } from '../../redux/store';
+import { AppDispatch, RootState } from '../../redux/store';
 import EditUser from '../editUser/EditUser';
+import { getOrderHistoryByUserData } from '../../redux/thunks/cart';
+
+function createData(
+  orderId: string,
+  date: string,
+  total: number,
+  shipping: string,
+  status: string
+) {
+  return { orderId, date, total, shipping, status };
+}
 
 export default function UserInformation() {
   const user = useSelector((state: RootState) => state.user.loginUser);
+  const orderHistory = useSelector(
+    (state: RootState) => state.cart.orderHistoryByUser
+  );
   const [editOpen, setEditOpen] = useState<boolean>(false);
+  const token = localStorage.getItem('userToken');
 
   const edit = () => {
     setEditOpen(!editOpen);
@@ -18,7 +41,22 @@ export default function UserInformation() {
     navigate('/');
   };
 
-  useEffect(() => {}, [user]);
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(getOrderHistoryByUserData(user._id, token));
+  }, [dispatch, user, token]);
+
+  const rows = orderHistory.map((order) =>
+    createData(
+      order._id,
+      order.date,
+      order.total,
+      order.address,
+      order.isDelivered
+    )
+  );
+
+  console.log(rows)
 
   return (
     <div>
@@ -38,13 +76,52 @@ export default function UserInformation() {
                 <button className='edit-btn' onClick={edit}>
                   EDIT INFO
                 </button>
-                <div>{editOpen === true && <EditUser user={user} setEditOpen={setEditOpen}/>}</div>
+                <div>
+                  {editOpen === true && (
+                    <EditUser user={user} setEditOpen={setEditOpen} />
+                  )}
+                </div>
               </div>
             </div>
             <div className='history'>
               <h1>My history</h1>
               <h3>Order history</h3>
-              <div></div>
+              <div>
+                <TableContainer component={Paper}>
+                  <Table
+                    sx={{ minWidth: 650 }}
+                    size='small'
+                    aria-label='a dense table'
+                  >
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Date</TableCell>
+                        <TableCell align='right'>Total</TableCell>
+                        <TableCell align='right'>Shipping</TableCell>
+                        <TableCell align='right'>Status</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {rows.map((row) => (
+                        <TableRow
+                          key={row.orderId}
+                          sx={{
+                            '&:last-child td, &:last-child th': { border: 0 },
+                          }}
+                        >
+                          <TableCell component='th' scope='row'>
+                            {row.orderId}
+                          </TableCell>
+                          <TableCell align='right'>{row.date}</TableCell>
+                          <TableCell align='right'>{row.total}</TableCell>
+                          <TableCell align='right'>{row.shipping}</TableCell>
+                          <TableCell align='right'>{row.status}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
             </div>
           </div>
         )}

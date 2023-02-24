@@ -10,7 +10,7 @@ export type UserData = {
   email: string;
   userName: string;
   isAdmin: boolean;
-}
+};
 
 export type Wine = {
   accidity: number;
@@ -29,4 +29,18 @@ export type Wine = {
   _id: string;
 };
 
-export type Cart = {};
+export type Order = {
+  _id: string;
+  userId: string;
+  address: string;
+  date: string;
+  orders: {
+    productId: string;
+    name: string;
+    image: string;
+    price: number;
+    quantity: number;
+  }[];
+  total: number;
+  isDelivered: string;
+};

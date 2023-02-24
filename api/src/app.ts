@@ -16,7 +16,7 @@ passport.use(jwtStrategy)
 
 // routes
 app.use('/product', productRouter);
-app.use('order', orderRouter);
+app.use('/order', orderRouter);
 app.use('/user', userRouter);
 
 export default app;

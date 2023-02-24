@@ -1,5 +1,6 @@
-import React from 'react'
+import * as React from 'react';
 
-export function History() {
-  return(<div></div>)
+export default function History() {
+  return(<div> 
+  </div>)
 }

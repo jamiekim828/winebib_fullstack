@@ -48,7 +48,7 @@ export default function EditUser({ user, setEditOpen }: Prop) {
   const editHandler = (newInfo: User) => {
     const userToken = localStorage.getItem('userToken');
     const url = `http://localhost:8000/user/${user._id}`;
-    
+
     axios
       .put(url, newInfo, { headers: { Authorization: `Bearer ${userToken}` } })
       .then((res) => {
@@ -87,19 +87,25 @@ export default function EditUser({ user, setEditOpen }: Prop) {
       >
         {({ errors, touched, handleChange }) => (
           <Form>
-            <label>New user name</label>
-            <input type='text' name='username' onChange={handleChange} />
-            <label>New password</label>
-            <input type='password' name='password' onChange={handleChange} />
+            <div>
+              <label>New user name</label>
+              <input type='text' name='username' onChange={handleChange} />
+            </div>
+            <div>
+              <label>New password</label>
+              <input type='password' name='password' onChange={handleChange} />
+            </div>
             {errors.password && touched.password ? (
               <p className='input-error'>*{errors.password}</p>
             ) : null}
-            <label>Confirm password</label>
-            <input
-              type='password'
-              name='confirmPassword'
-              onChange={handleChange}
-            />
+            <div>
+              <label>Confirm password</label>
+              <input
+                type='password'
+                name='confirmPassword'
+                onChange={handleChange}
+              />
+            </div>
             {errors.confirmPassword && touched.confirmPassword ? (
               <p className='input-error'>*{errors.confirmPassword}</p>
             ) : null}

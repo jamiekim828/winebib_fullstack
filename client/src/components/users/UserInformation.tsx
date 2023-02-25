@@ -11,18 +11,25 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import './UserInformation.css';
-import { AppDispatch, RootState } from '../../redux/store';
 import EditUser from '../editUser/EditUser';
+import { AppDispatch, RootState } from '../../redux/store';
 import { getOrderHistoryByUserData } from '../../redux/thunks/cart';
 
 function createData(
   orderId: string,
   date: string,
+  products: {
+    productId: string;
+    name: string;
+    image: string;
+    price: number;
+    quantity: number;
+  }[],
   total: number,
   shipping: string,
   status: string
 ) {
-  return { orderId, date, total, shipping, status };
+  return { orderId, date, products, total, shipping, status };
 }
 
 export default function UserInformation() {
@@ -30,6 +37,7 @@ export default function UserInformation() {
   const orderHistory = useSelector(
     (state: RootState) => state.cart.orderHistoryByUser
   );
+
   const [editOpen, setEditOpen] = useState<boolean>(false);
   const token = localStorage.getItem('userToken');
 
@@ -50,13 +58,12 @@ export default function UserInformation() {
     createData(
       order._id,
       order.date,
+      order.orders,
       order.total,
       order.address,
       order.isDelivered
     )
   );
-
-  console.log(rows)
 
   return (
     <div>
@@ -74,7 +81,7 @@ export default function UserInformation() {
                   LOG OUT
                 </button>
                 <button className='edit-btn' onClick={edit}>
-                  EDIT INFO
+                  {!editOpen ? 'EDIT INFO' : 'CANCEL'}
                 </button>
                 <div>
                   {editOpen === true && (
@@ -87,7 +94,7 @@ export default function UserInformation() {
               <h1>My history</h1>
               <h3>Order history</h3>
               <div>
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper} sx={{width: 800}}>
                   <Table
                     sx={{ minWidth: 650 }}
                     size='small'
@@ -95,9 +102,11 @@ export default function UserInformation() {
                   >
                     <TableHead>
                       <TableRow>
-                        <TableCell>Date</TableCell>
+                        <TableCell>Id</TableCell>
+                        <TableCell align='right'>Date</TableCell>
+                        <TableCell align='right'>Products</TableCell>
                         <TableCell align='right'>Total</TableCell>
-                        <TableCell align='right'>Shipping</TableCell>
+                        <TableCell align='right'>Address</TableCell>
                         <TableCell align='right'>Status</TableCell>
                       </TableRow>
                     </TableHead>
@@ -110,10 +119,28 @@ export default function UserInformation() {
                           }}
                         >
                           <TableCell component='th' scope='row'>
-                            {row.orderId}
+                            {row.orderId.slice(12, 26)}
                           </TableCell>
-                          <TableCell align='right'>{row.date}</TableCell>
-                          <TableCell align='right'>{row.total}</TableCell>
+                          <TableCell align='left'>
+                            {new Date(row.date).toISOString().slice(0, 10)}
+                          </TableCell>
+                          <TableCell align='left'>
+                            {row.products.map((order) => (
+                              <div className='history-products'>
+                                <img
+                                  src={`${order.image}`}
+                                  alt={`${order.name}`}
+                                />
+                                <p className='history-product-name'>
+                                  {order.name}
+                                </p>
+                                <p>
+                                  {order.price} x {order.quantity}
+                                </p>
+                              </div>
+                            ))}
+                          </TableCell>
+                          <TableCell align='left'>$ {row.total}</TableCell>
                           <TableCell align='right'>{row.shipping}</TableCell>
                           <TableCell align='right'>{row.status}</TableCell>
                         </TableRow>

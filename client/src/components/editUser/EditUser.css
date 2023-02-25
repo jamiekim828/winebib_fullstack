@@ -14,3 +14,8 @@
   cursor: pointer;
   margin-top: 1rem;
 }
+
+.edit-div div {
+  display: flex;
+  flex-direction: column;
+}

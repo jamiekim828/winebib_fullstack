@@ -3,7 +3,6 @@ import mongoose, { Document } from 'mongoose';
 import User from './User';
 
 export type OrderDocument = Document & {
-  
   date: Date;
   userId: string;
   address: string;
@@ -14,7 +13,6 @@ export type OrderDocument = Document & {
 
 const Schema = mongoose.Schema;
 const OrderSchema = new Schema({
-  
   date: {
     type: Date,
     default: Date.now(),
@@ -27,10 +25,10 @@ const OrderSchema = new Schema({
   orders: [
     {
       productId: Schema.Types.ObjectId,
-      name: String,
-      image: String,
-      price: Number,
-      quantity: Number
+      name: { type: String, required: true },
+      image: { type: String },
+      price: { type: Number, required: true },
+      quantity: { type: Number, required: true },
     },
   ],
   total: Number,

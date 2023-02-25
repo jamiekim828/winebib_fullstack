@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -15,9 +16,13 @@ import WineBarIcon from '@mui/icons-material/WineBar';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Badge from '@mui/material/Badge';
+
+import { RootState } from '../../redux/store';
 
 export default function TemporaryDrawer() {
   const [state, setState] = React.useState(false);
+  const cartList = useSelector((state:RootState)=> state.cart.cart)
 
   const toggleDrawer = (open: boolean) => (event: any) => {
     if (
@@ -121,6 +126,7 @@ export default function TemporaryDrawer() {
             />
           </Link>
           <Link to='/cart'>
+          <Badge badgeContent={cartList.length} color="success">
             <ShoppingCartIcon
               sx={{
                 marginRight: '.5rem',
@@ -129,6 +135,7 @@ export default function TemporaryDrawer() {
                 color: '#b71c1c',
               }}
             />
+            </Badge>
           </Link>
           <Button onClick={toggleDrawer(true)}>
             <MenuIcon sx={{ color: '#b71c1c', fontSize: '31px' }} />

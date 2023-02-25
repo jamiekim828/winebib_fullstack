@@ -1,6 +1,7 @@
 .user-div {
-  height: 60vh;
-  padding-left: 5rem;
+  height: content-fit;
+  padding-left: 4rem;
+  margin-bottom: 2rem;
 }
 
 .user-empty {
@@ -44,5 +45,19 @@
 .account,
 .history {
     width: auto;
-    margin-left: 7rem;
+    margin-left: 5rem;
+}
+
+.history-products {
+  display: flex;
+}
+
+.history-products img {
+  width: 37px;
+  height: 37px;
+  margin-right: 1rem;
+}
+
+.history-product-name {
+  margin-right: 1rem;
 }

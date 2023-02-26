@@ -30,6 +30,7 @@ export function loginUserThunk(user: User) {
     await axios
       .post(`${url}/login`, user)
       .then((res) => {
+        console.log(res)
         if(res.status === 200) {
         const data = res.data.userData;
         const token = res.data.token;
@@ -38,9 +39,9 @@ export function loginUserThunk(user: User) {
         dispatch(userActions.messageAction('Welcome! You are logged in.'))
         localStorage.setItem('loginUser', JSON.stringify(data))
         localStorage.setItem('userToken', token)
-       } else {
-        dispatch(userActions.loginAction(false))
-        dispatch(userActions.messageAction('Login failed. Please check your email and password'))
+       } 
+       if(res.status === 400) {
+        dispatch(userActions.messageAction(res.data.message))
        }
       })
       .catch((err) =>

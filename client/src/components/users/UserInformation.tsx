@@ -61,11 +61,8 @@ export default function UserInformation() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(user)
     dispatch(getOrderHistoryByUserData(user._id, token));
   }, []);
-
-  console.log(user, token, orderHistory)
 
   const rows = orderHistory.map((order) =>
     createData(

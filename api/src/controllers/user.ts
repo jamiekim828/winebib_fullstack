@@ -14,7 +14,10 @@ export const logInWithPassword = async (
     const userData = await UserServices.findUserByEmail(request.body.email);
 
     if (!userData) {
-      response.json({ message: `"${request.body.email}" is not registered yet` });
+      response.status(400).json({
+        message: `This email is not registered yet`,
+        data: { _id: '', userName: '', email: '', isAdmin: false },
+      });
       return;
     }
 
@@ -22,14 +25,14 @@ export const logInWithPassword = async (
     const passwordDatabase = userData.password;
 
     const match = await bcrypt.compare(plainPassword, passwordDatabase);
-    
+
     if (!match) {
       response.status(400).json({ message: 'wrong password' });
       return;
     }
 
     const token = generateToken(userData.email);
-    
+
     response.status(200).json({
       userData: {
         _id: userData._id,
@@ -100,27 +103,27 @@ export const updateUserByIdController = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
     const update = req.body;
-    const user = await UserServices.getUserById(userId)
+    const user = await UserServices.getUserById(userId);
 
-    if(!user) {
+    if (!user) {
       return;
     }
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(update.password, salt);
-    
+
     const newUserInfo = {
       userName: update.username,
       password: hashedPassword,
       email: user.email,
-    }
+    };
 
     const updateUser = await UserServices.updateUser(userId, newUserInfo);
     // .select
     // need to be fixed
     res.status(200).json(updateUser);
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(500).json('Server error');
   }
 };

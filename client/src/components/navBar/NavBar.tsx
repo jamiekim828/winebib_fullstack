@@ -22,9 +22,9 @@ import { RootState } from '../../redux/store';
 
 export default function TemporaryDrawer() {
   const [state, setState] = React.useState(false);
-  const loginUser = useSelector((state:RootState)=> state.user.loginUser)
-  const cartList = useSelector((state:RootState)=> state.cart.cart)
-  const [userToken, setUserToken] = React.useState<string | null>(null)
+  const loginUser = useSelector((state: RootState) => state.user.loginUser);
+  const cartList = useSelector((state: RootState) => state.cart.cart);
+  const [userToken, setUserToken] = React.useState<string | null>(null);
 
   const toggleDrawer = (open: boolean) => (event: any) => {
     if (
@@ -38,8 +38,8 @@ export default function TemporaryDrawer() {
   };
 
   React.useEffect(() => {
-    setUserToken(localStorage.getItem('userToken'))
-  }, [userToken])
+    setUserToken(localStorage.getItem('userToken'));
+  }, [userToken]);
 
   const list = () => (
     <Box
@@ -59,7 +59,7 @@ export default function TemporaryDrawer() {
                 <ListItemIcon>
                   {<WineBarIcon sx={{ color: '#b71c1c' }} />}
                 </ListItemIcon>
-                <ListItemText primary={text}/>
+                <ListItemText primary={text} />
               </ListItemButton>
             </Link>
           </ListItem>
@@ -94,8 +94,8 @@ export default function TemporaryDrawer() {
           justifyContent: 'space-between',
           alignItems: 'center',
           height: '37px',
-          paddingTop:'1.5rem',
-          paddingBottom: '1.5rem'
+          paddingTop: '1.5rem',
+          paddingBottom: '1.5rem',
         }}
       >
         <Link
@@ -111,15 +111,30 @@ export default function TemporaryDrawer() {
           Winebib
         </Link>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Link to={loginUser.email !== '' && userToken !== null ? '/account' : '/login'}>
-            <PersonOutlineIcon
-              sx={{
-                marginRight: '1.2rem',
-                cursor: 'pointer',
-                fontSize: '31px',
-                color: '#b71c1c',
-              }}
-            />
+          <Link
+            to={
+              loginUser.email !== '' && userToken !== null
+                ? '/account'
+                : '/login'
+            }
+          >
+            <Badge
+              color={
+                loginUser.email !== '' && userToken !== null ? 'info' : 'error'
+              }
+              badgeContent={
+                loginUser.email !== '' && userToken !== null ? 'v' : 'x'
+              }
+              sx={{ marginRight: '1.2rem' }}
+            >
+              <PersonOutlineIcon
+                sx={{
+                  cursor: 'pointer',
+                  fontSize: '31px',
+                  color: '#b71c1c',
+                }}
+              />
+            </Badge>
           </Link>
           <Link to='/wishlist'>
             <StarBorderIcon
@@ -132,15 +147,15 @@ export default function TemporaryDrawer() {
             />
           </Link>
           <Link to='/cart'>
-          <Badge badgeContent={cartList.length} color="success">
-            <ShoppingCartIcon
-              sx={{
-                marginRight: '.5rem',
-                cursor: 'pointer',
-                fontSize: '31px',
-                color: '#b71c1c',
-              }}
-            />
+            <Badge badgeContent={cartList.length} color='info'>
+              <ShoppingCartIcon
+                sx={{
+                  marginRight: '.5rem',
+                  cursor: 'pointer',
+                  fontSize: '31px',
+                  color: '#b71c1c',
+                }}
+              />
             </Badge>
           </Link>
           <Button onClick={toggleDrawer(true)}>

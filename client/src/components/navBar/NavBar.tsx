@@ -25,6 +25,8 @@ export default function TemporaryDrawer() {
   const loginUser = useSelector((state: RootState) => state.user.loginUser);
   const cartList = useSelector((state: RootState) => state.cart.cart);
   const [userToken, setUserToken] = React.useState<string | null>(null);
+  const cartQuantity = cartList.map((cart) => cart.quantity);
+  const cartTotal = cartQuantity.reduce((a: number, b: number) => a + b, 0);
 
   const toggleDrawer = (open: boolean) => (event: any) => {
     if (
@@ -147,7 +149,7 @@ export default function TemporaryDrawer() {
             />
           </Link>
           <Link to='/cart'>
-            <Badge badgeContent={cartList.length} color='info'>
+            <Badge badgeContent={cartTotal} color='info'>
               <ShoppingCartIcon
                 sx={{
                   marginRight: '.5rem',

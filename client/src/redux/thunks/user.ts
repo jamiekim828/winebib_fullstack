@@ -3,7 +3,6 @@ import axios from 'axios';
 import { AppDispatch } from '../store';
 import { userActions } from '../slices/user';
 import { User } from '../../types/type';
-import { cartActions } from '../slices/cart';
 
 const url = 'http://localhost:8000/user';
 
@@ -30,7 +29,6 @@ export function loginUserThunk(user: User) {
     await axios
       .post(`${url}/login`, user)
       .then((res) => {
-        console.log(res)
         if(res.status === 200) {
         const data = res.data.userData;
         const token = res.data.token;

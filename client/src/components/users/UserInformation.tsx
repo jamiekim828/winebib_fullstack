@@ -13,10 +13,10 @@ import Paper from '@mui/material/Paper';
 import './UserInformation.css';
 import EditUser from '../editUser/EditUser';
 import { AppDispatch, RootState } from '../../redux/store';
-import { getOrderHistoryByUserData } from '../../redux/thunks/cart';
+import { getOrderHistoryByUserData } from '../../redux/thunks/order';
 import { userActions } from '../../redux/slices/user';
 import { logoutUser } from '../../redux/thunks/user';
-import { cartActions } from '../../redux/slices/cart';
+import { orderActions } from '../../redux/slices/order';
 
 function createData(
   orderId: string,
@@ -50,7 +50,7 @@ export default function UserInformation() {
   const navigate = useNavigate();
   const logOut = () => {
     dispatch(logoutUser())
-    dispatch(cartActions.removeOrderHistory([]))
+    dispatch(orderActions.removeOrderHistory([]))
     navigate('/');
   };
 
@@ -121,7 +121,7 @@ export default function UserInformation() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows.map((row) => (
+                      {rows.length === 0 ? <p style={{textAlign: 'right'}}>You have not ordered yet.</p> : rows.map((row) => (
                         <TableRow
                           key={row.orderId}
                           sx={{

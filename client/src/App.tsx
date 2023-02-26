@@ -13,6 +13,8 @@ import Contact from './pages/Contact';
 import About from './pages/About';
 import Location from './pages/Location';
 import { ProductDescription } from './components/productDescription/ProductDescription';
+import Shipping from './components/shipping/Shipping';
+import CheckOut from './components/checkOut/CheckOut';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
         <Route path='/wine/:id' element={<ProductDescription />}/>
         <Route path='/wishlist' element={<WishList />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/check-out' element={<CheckOut />} />
+        <Route path='/shipping' element={<Shipping />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/location' element={<Location />} />

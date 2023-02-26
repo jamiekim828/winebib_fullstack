@@ -1,51 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { Order } from '../../types/type';
-
 type InitialState = {
-  orderHistory: Order[];
-  oneOrder: Order;
-  orderHistoryByUser: Order[];
   cart: {
-    productId: '';
-    name: '';
-    image: '';
-    price: 0;
-    quantity: 0;
+    productId: string;
+    name: string;
+    image: string;
+    price: number;
+    quantity: number;
   }[];
+  shippingAddress: string;
+  payment: string;
 };
 
 const initialState: InitialState = {
-  orderHistory: [],
-  oneOrder: {
-    _id: '',
-    date: '',
-    userId: '',
-    address: '',
-    orders: [],
-    total: 0,
-    isDelivered: 'Prepare',
-  },
-  orderHistoryByUser: [],
   cart: [],
+  shippingAddress: '',
+  payment: ''
 };
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    getAllOrders: (state, action) => {
-      state.orderHistory = action.payload;
-    },
-    getOneOrder: (state, action) => {
-      state.oneOrder = action.payload;
-    },
-    getOrderHistoryByUser: (state, action) => {
-      state.orderHistoryByUser = action.payload;
-    },
-    removeOrderHistory : (state, action) => {
-      state.orderHistoryByUser = action.payload
-    },
     addToCartAction: (state, action) => {
       const index = state.cart.findIndex(
         (wine) => wine.productId === action.payload.productId

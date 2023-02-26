@@ -38,7 +38,7 @@ function createData(
 export default function UserInformation() {
   const user = useSelector((state: RootState) => state.user.loginUser);
   const orderHistory = useSelector(
-    (state: RootState) => state.cart.orderHistoryByUser
+    (state: RootState) => state.order.orderHistoryByUser
   );
   const [editOpen, setEditOpen] = useState<boolean>(false);
   const token = localStorage.getItem('userToken');

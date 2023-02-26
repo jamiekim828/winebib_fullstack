@@ -2,13 +2,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import './Cart.css';
 import { AppDispatch, RootState } from '../../redux/store';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { cartActions } from '../../redux/slices/cart';
 
 export default function Cart() {
   const cart = useSelector((state: RootState) => state.cart.cart);
   const cartPrice = cart.map((item) => item.price * item.quantity);
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate()
+  const checkOut = () => {
+    localStorage.setItem('cart', JSON.stringify(cart))
+    navigate('/check-out')
+  }
 
   return (
     <div className='cart-div'>
@@ -78,7 +83,7 @@ export default function Cart() {
                 <p>Total</p>
                 <p>$ {cartPrice.reduce((a, b) => a + b)} USD</p>
               </div>
-              <button className='check-out'>Check Out</button>
+              <button className='check-out' onClick={checkOut}>Check Out</button>
             </div>
           </div>
         </div>

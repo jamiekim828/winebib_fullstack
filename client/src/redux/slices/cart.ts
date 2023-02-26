@@ -43,6 +43,9 @@ const cartSlice = createSlice({
     getOrderHistoryByUser: (state, action) => {
       state.orderHistoryByUser = action.payload;
     },
+    removeOrderHistory : (state, action) => {
+      state.orderHistoryByUser = action.payload
+    },
     addToCartAction: (state, action) => {
       const index = state.cart.findIndex(
         (wine) => wine.productId === action.payload.productId

@@ -14,6 +14,9 @@ import './UserInformation.css';
 import EditUser from '../editUser/EditUser';
 import { AppDispatch, RootState } from '../../redux/store';
 import { getOrderHistoryByUserData } from '../../redux/thunks/cart';
+import { userActions } from '../../redux/slices/user';
+import { logoutUser } from '../../redux/thunks/user';
+import { cartActions } from '../../redux/slices/cart';
 
 function createData(
   orderId: string,
@@ -37,22 +40,32 @@ export default function UserInformation() {
   const orderHistory = useSelector(
     (state: RootState) => state.cart.orderHistoryByUser
   );
-
   const [editOpen, setEditOpen] = useState<boolean>(false);
   const token = localStorage.getItem('userToken');
 
   const edit = () => {
     setEditOpen(!editOpen);
   };
+
   const navigate = useNavigate();
   const logOut = () => {
+    dispatch(logoutUser())
+    dispatch(cartActions.removeOrderHistory([]))
     navigate('/');
   };
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>()
   useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem('loginUser') || '{}');
+    dispatch(userActions.getLoginUser(userInfo))
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log(user)
     dispatch(getOrderHistoryByUserData(user._id, token));
-  }, [dispatch, user, token]);
+  }, []);
+
+  console.log(user, token, orderHistory)
 
   const rows = orderHistory.map((order) =>
     createData(
@@ -94,7 +107,7 @@ export default function UserInformation() {
               <h1>My history</h1>
               <h3>Order history</h3>
               <div>
-                <TableContainer component={Paper} sx={{width: 800}}>
+                <TableContainer component={Paper} sx={{ width: 800 }}>
                   <Table
                     sx={{ minWidth: 650 }}
                     size='small'

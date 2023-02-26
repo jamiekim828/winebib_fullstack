@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -13,7 +13,7 @@ import { Button } from '@mui/material';
 
 import './EditUser.css';
 import { User, UserData } from '../../types/type';
-import { AppDispatch, RootState } from '../../redux/store';
+import { AppDispatch } from '../../redux/store';
 import { getUserById } from '../../redux/thunks/user';
 
 const EditSchema = Yup.object().shape({
@@ -36,7 +36,6 @@ type Prop = {
 };
 
 export default function EditUser({ user, setEditOpen }: Prop) {
-  const loginUser = useSelector((state: RootState) => state.user.loginUser);
   const [open, setOpen] = useState<boolean>(false);
   const [warning, setWarning] = useState<string>('');
   const dispatch = useDispatch<AppDispatch>();

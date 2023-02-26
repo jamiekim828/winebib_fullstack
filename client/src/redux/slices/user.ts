@@ -7,6 +7,7 @@ type InitialState = {
   user: User;
   users: UserData[];
   loginUser: UserData;
+  message: string;
 };
 
 const initialState: InitialState = {
@@ -23,6 +24,7 @@ const initialState: InitialState = {
     email: '',
     isAdmin: false
   },
+  message: ''
 };
 
 const userSlice = createSlice({
@@ -35,6 +37,15 @@ const userSlice = createSlice({
     updateUser: (state, action) => {
       state.user = action.payload;
     },
+    messageAction: (state, action) => {
+      state.message = action.payload
+    },
+    loginAction: (state, action) => {
+      state.loginUser = action.payload
+    },
+    logoutAction: (state, action) => {
+      state.loginUser = action.payload
+    }
   },
 });
 

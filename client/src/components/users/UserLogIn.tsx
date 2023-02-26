@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -12,10 +11,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Button } from '@mui/material';
 
 import './UserLogIn.css';
-import { User, UserData } from '../../types/type';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
-import { userActions } from '../../redux/slices/user';
+import { User } from '../../types/type';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
+import { loginUserThunk, registerUserThunk } from '../../redux/thunks/user';
 
 const LogInSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Email is required'),
@@ -47,39 +46,23 @@ const RegisterSchema = Yup.object().shape({
 });
 
 export default function UserLogIn() {
-  const [register, setRegister] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>('');
+  const message = useSelector(
+    (state: RootState) => state.user.message
+  );
   const [open, setOpen] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const url = 'http://localhost:8000/user';
 
   const loginHandler = (user: User) => {
     if (!user) {
       return;
     }
     if (user) {
-      axios
-        .post(`${url}/login`, user)
-        .then((res) => {
-          const data = res.data.userData;
-          const token = res.data.token;
-          localStorage.setItem('userToken', token);
-          dispatch(userActions.getLoginUser(data));
-          if(token) {
-            navigate('/account');
-          } else {
-            setMessage(`Login failed. ${res.data.message}.`)
-            setOpen(true)
-          }
-          
-        })
-        .catch((err) => {
-          setMessage(err.response.data);
-          setOpen(true);
-        });
+      dispatch(loginUserThunk(user));
+      setOpen(true)
     }
+    setOpen(true)
   };
 
   const registerHandler = (user: User) => {
@@ -87,23 +70,18 @@ export default function UserLogIn() {
       return;
     }
     if (user) {
-      axios
-        .post(url, user)
-        .then((res) => {
-          setMessage('Cheers! You are registered. Please log in.');
-          setOpen(true);
-        })
-        .catch((err) => {
-          setMessage(err.response.data);
-          setOpen(true);
-        });
-      setRegister(true);
+      dispatch(registerUserThunk(user));
+      setOpen(true);
     }
+    setOpen(true)
   };
 
   const handleClose = () => {
     setOpen(false);
+    navigate('/')
   };
+
+
 
   return (
     <div className='user-page'>
@@ -212,25 +190,25 @@ export default function UserLogIn() {
           </Formik>
         </div>
         <div>
-                  <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby='alert-dialog-title'
-                    aria-describedby='alert-dialog-description'
-                  >
-                    <DialogTitle id='alert-dialog-title'>Message</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText id='alert-dialog-description'>
-                        {message}
-                      </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                      <Button onClick={handleClose} autoFocus>
-                        Close
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
-                </div>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby='alert-dialog-title'
+            aria-describedby='alert-dialog-description'
+          >
+            <DialogTitle id='alert-dialog-title'>Message</DialogTitle>
+            <DialogContent>
+              <DialogContentText id='alert-dialog-description'>
+                {message}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} autoFocus>
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </div>
     </div>
   );

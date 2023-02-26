@@ -22,7 +22,9 @@ import { RootState } from '../../redux/store';
 
 export default function TemporaryDrawer() {
   const [state, setState] = React.useState(false);
+  const loginUser = useSelector((state:RootState)=> state.user.loginUser)
   const cartList = useSelector((state:RootState)=> state.cart.cart)
+  const [userToken, setUserToken] = React.useState<string | null>(null)
 
   const toggleDrawer = (open: boolean) => (event: any) => {
     if (
@@ -34,6 +36,10 @@ export default function TemporaryDrawer() {
 
     setState(open);
   };
+
+  React.useEffect(() => {
+    setUserToken(localStorage.getItem('userToken'))
+  }, [userToken])
 
   const list = () => (
     <Box
@@ -105,7 +111,7 @@ export default function TemporaryDrawer() {
           Winebib
         </Link>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Link to='/login'>
+          <Link to={loginUser.email !== '' && userToken !== null ? '/account' : '/login'}>
             <PersonOutlineIcon
               sx={{
                 marginRight: '1.2rem',

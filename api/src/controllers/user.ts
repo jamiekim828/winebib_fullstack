@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import User from '../models/User';
 import UserServices from '../services/user';
 import { generateToken } from '../utils/generateToken';
+import mongoose from 'mongoose';
 
 export const logInWithPassword = async (
   request: Request,
@@ -23,7 +24,7 @@ export const logInWithPassword = async (
     const match = await bcrypt.compare(plainPassword, passwordDatabase);
     
     if (!match) {
-      response.json({ message: 'wrong password' });
+      response.status(400).json({ message: 'wrong password' });
       return;
     }
 
@@ -56,6 +57,7 @@ export const createUserController = async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
+      _id: new mongoose.Types.ObjectId(),
       userName: req.body.userName,
       email: email,
       password: hashedPassword,
@@ -71,7 +73,7 @@ export const createUserController = async (req: Request, res: Response) => {
       // token?
     });
   } catch (err) {
-    res.status(500).json('server error');
+    res.status(500).json('Server error');
   }
 };
 

@@ -29,9 +29,10 @@ export default function NavBar({userTok}: Prop) {
   const loginUser = useSelector((state: RootState) => state.user.loginUser);
   const cartList = useSelector((state: RootState) => state.cart.cart);
   const [userToken, setUserToken] = React.useState<string | null>(null);
+  const loginSuccess = useSelector((state:RootState)=> state.user.loginSuccess)
   const cartQuantity = cartList.map((cart) => cart.quantity);
   const cartTotal = cartQuantity.reduce((a: number, b: number) => a + b, 0);
-  console.log(loginUser, userToken)
+  console.log(loginUser, userToken, loginSuccess)
 
   const toggleDrawer = (open: boolean) => (event: any) => {
     if (
@@ -119,17 +120,17 @@ export default function NavBar({userTok}: Prop) {
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Link
             to={
-              userToken !== null
+              loginSuccess === true
                 ? '/account'
                 : '/login'
             }
           >
             <Badge
               color={
-                 userToken !== null ? 'info' : 'error'
+                loginSuccess === true ? 'info' : 'error'
               }
               badgeContent={
-                 userToken !== null ? 'v' : 'x'
+                loginSuccess === true ? 'v' : 'x'
               }
               sx={{ marginRight: '1.2rem' }}
             >

@@ -57,6 +57,7 @@ export default function UserInformation() {
   const navigate = useNavigate();
   const logOut = () => {
     dispatch(logoutUser());
+    dispatch(userActions.loginSuccessAction(false))
     dispatch(orderActions.removeOrderHistory([]));
     navigate('/');
   };

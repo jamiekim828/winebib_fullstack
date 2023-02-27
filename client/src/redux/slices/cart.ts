@@ -8,14 +8,19 @@ type InitialState = {
     price: number;
     quantity: number;
   }[];
-  shippingAddress: string;
-  payment: string;
+  shippingAddress: {
+    userName: string;
+    street: string;
+    houseNumber: string;
+    zip: string;
+    city: string;
+    country: string;
+  }[];
 };
 
 const initialState: InitialState = {
   cart: [],
-  shippingAddress: '',
-  payment: ''
+  shippingAddress: []
 };
 
 const cartSlice = createSlice({
@@ -50,6 +55,9 @@ const cartSlice = createSlice({
       );
       state.cart.splice(index, 1);
     },
+    getShippingAddress: (state, action)=> {
+      state.shippingAddress.push(action.payload)
+    }
   },
 });
 

@@ -17,10 +17,12 @@ import Shipping from './components/shipping/Shipping';
 import CheckOut from './components/checkOut/CheckOut';
 
 function App() {
+  const token = localStorage.getItem('userToken')
+
   return (
     <div className='App'>
     <BrowserRouter>
-      <NavBar />
+      <NavBar userTok={token}/>
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/login' element={<UserLogIn />} />

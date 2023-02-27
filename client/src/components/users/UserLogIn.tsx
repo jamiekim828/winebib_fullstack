@@ -81,8 +81,6 @@ export default function UserLogIn() {
     navigate('/')
   };
 
-
-
   return (
     <div className='user-page'>
       <h1>My account</h1>

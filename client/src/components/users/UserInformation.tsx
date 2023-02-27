@@ -29,7 +29,14 @@ function createData(
     quantity: number;
   }[],
   total: number,
-  shipping: string,
+  shipping: {
+    city: string;
+    country: string;
+    houseNumber: string;
+    street: string;
+    userName: string;
+    zip: string;
+  }[],
   status: string
 ) {
   return { orderId, date, products, total, shipping, status };
@@ -49,15 +56,15 @@ export default function UserInformation() {
 
   const navigate = useNavigate();
   const logOut = () => {
-    dispatch(logoutUser())
-    dispatch(orderActions.removeOrderHistory([]))
+    dispatch(logoutUser());
+    dispatch(orderActions.removeOrderHistory([]));
     navigate('/');
   };
 
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('loginUser') || '{}');
-    dispatch(userActions.getLoginUser(userInfo))
+    dispatch(userActions.getLoginUser(userInfo));
   }, [dispatch]);
 
   useEffect(() => {
@@ -74,6 +81,8 @@ export default function UserInformation() {
       order.isDelivered
     )
   );
+
+  console.log(rows);
 
   return (
     <div>
@@ -121,40 +130,52 @@ export default function UserInformation() {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows.length === 0 ? <p style={{textAlign: 'right'}}>You have not ordered yet.</p> : rows.map((row) => (
-                        <TableRow
-                          key={row.orderId}
-                          sx={{
-                            '&:last-child td, &:last-child th': { border: 0 },
-                          }}
-                        >
-                          <TableCell component='th' scope='row'>
-                            {row.orderId.slice(12, 26)}
-                          </TableCell>
-                          <TableCell align='left'>
-                            {new Date(row.date).toISOString().slice(0, 10)}
-                          </TableCell>
-                          <TableCell align='left'>
-                            {row.products.map((order) => (
-                              <div className='history-products'>
-                                <img
-                                  src={`${order.image}`}
-                                  alt={`${order.name}`}
-                                />
-                                <p className='history-product-name'>
-                                  {order.name}
-                                </p>
-                                <p>
-                                  {order.price} x {order.quantity}
-                                </p>
-                              </div>
-                            ))}
-                          </TableCell>
-                          <TableCell align='left'>$ {row.total}</TableCell>
-                          <TableCell align='right'>{row.shipping}</TableCell>
-                          <TableCell align='right'>{row.status}</TableCell>
-                        </TableRow>
-                      ))}
+                      {token === null ? (
+                        <p style={{ textAlign: 'right' }}>
+                          You have not ordered yet.
+                        </p>
+                      ) : (
+                        rows.map((row) => (
+                          <TableRow
+                            key={row.orderId}
+                            sx={{
+                              '&:last-child td, &:last-child th': { border: 0 },
+                            }}
+                          >
+                            <TableCell component='th' scope='row'>
+                              {row.orderId.slice(12, 26)}
+                            </TableCell>
+                            <TableCell align='left'>
+                              {new Date(row.date).toISOString().slice(0, 10)}
+                            </TableCell>
+                            <TableCell align='left'>
+                              {row.products.map((order) => (
+                                <div className='history-products'>
+                                  <img
+                                    src={`${order.image}`}
+                                    alt={`${order.name}`}
+                                  />
+                                  <p className='history-product-name'>
+                                    {order.name}
+                                  </p>
+                                  <p>
+                                    {order.price} x {order.quantity}
+                                  </p>
+                                </div>
+                              ))}
+                            </TableCell>
+                            <TableCell align='left'>$ {row.total}</TableCell>
+                            <TableCell align='right' className='shipping-cell'>
+                              To: {row.shipping[0].userName}<br/>
+                                {row.shipping[0].street}{' '}
+                                {row.shipping[0].houseNumber},{' '}
+                                {row.shipping[0].city},{' '}
+                                {row.shipping[0].country}
+                            </TableCell>
+                            <TableCell align='right'>{row.status}</TableCell>
+                          </TableRow>
+                        ))
+                      )}
                     </TableBody>
                   </Table>
                 </TableContainer>

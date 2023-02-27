@@ -20,13 +20,18 @@ import Badge from '@mui/material/Badge';
 
 import { RootState } from '../../redux/store';
 
-export default function TemporaryDrawer() {
+type Prop = {
+  userTok: string | null;
+}
+
+export default function NavBar({userTok}: Prop) {
   const [state, setState] = React.useState(false);
   const loginUser = useSelector((state: RootState) => state.user.loginUser);
   const cartList = useSelector((state: RootState) => state.cart.cart);
   const [userToken, setUserToken] = React.useState<string | null>(null);
   const cartQuantity = cartList.map((cart) => cart.quantity);
   const cartTotal = cartQuantity.reduce((a: number, b: number) => a + b, 0);
+  console.log(loginUser, userToken)
 
   const toggleDrawer = (open: boolean) => (event: any) => {
     if (
@@ -35,13 +40,12 @@ export default function TemporaryDrawer() {
     ) {
       return;
     }
-
     setState(open);
   };
 
   React.useEffect(() => {
-    setUserToken(localStorage.getItem('userToken'));
-  }, [userToken]);
+    setUserToken(userTok);
+  }, []);
 
   const list = () => (
     <Box
@@ -115,17 +119,17 @@ export default function TemporaryDrawer() {
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Link
             to={
-              loginUser.email !== '' && userToken !== null
+              userToken !== null
                 ? '/account'
                 : '/login'
             }
           >
             <Badge
               color={
-                loginUser.email !== '' && userToken !== null ? 'info' : 'error'
+                 userToken !== null ? 'info' : 'error'
               }
               badgeContent={
-                loginUser.email !== '' && userToken !== null ? 'v' : 'x'
+                 userToken !== null ? 'v' : 'x'
               }
               sx={{ marginRight: '1.2rem' }}
             >

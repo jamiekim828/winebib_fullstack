@@ -8,6 +8,7 @@ type InitialState = {
   users: UserData[];
   loginUser: UserData;
   message: string;
+  loginSuccess: Boolean;
 };
 
 const initialState: InitialState = {
@@ -24,7 +25,8 @@ const initialState: InitialState = {
     email: '',
     isAdmin: false
   },
-  message: ''
+  message: '',
+  loginSuccess: false
 };
 
 const userSlice = createSlice({
@@ -45,6 +47,9 @@ const userSlice = createSlice({
     },
     logoutAction: (state, action) => {
       state.loginUser = action.payload
+    },
+    loginSuccessAction: (state, action) => {
+      state.loginSuccess = action.payload
     }
   },
 });

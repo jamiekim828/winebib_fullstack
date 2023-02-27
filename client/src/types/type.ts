@@ -32,7 +32,14 @@ export type Wine = {
 export type Order = {
   _id: string;
   userId: string;
-  address: string;
+  address: {
+      city: string;
+      country: string;
+      houseNumber: string;
+      street: string;
+      userName: string;
+      zip: string;
+    }[];
   date: string;
   orders: {
     productId: string;

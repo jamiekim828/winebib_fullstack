@@ -5,7 +5,7 @@ import User from './User';
 export type OrderDocument = Document & {
   date: Date;
   userId: string;
-  address: string;
+  address: [];
   orders: [];
   total: number;
   isDelivered: string;
@@ -21,7 +21,14 @@ const OrderSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  address: String,
+  address: [{
+    city: {type: String, required: true},
+    country: {type: String, required: true},
+    houseNumber: {type: String, required: true},
+    street: {type: String, required: true},
+    userName: {type: String, required: true},
+    zip: {type:String, required: true}
+  }],
   orders: [
     {
       productId: Schema.Types.ObjectId,

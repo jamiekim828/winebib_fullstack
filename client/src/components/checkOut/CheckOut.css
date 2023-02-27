@@ -1,20 +1,53 @@
 .checkout-container {
-    margin-left: 5rem;
+  margin-left: 5rem;
 }
 
 .checkout-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid darkred;
-    width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid darkred;
+  width: 90%;
 }
 
 .checkout-div {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .shipping-div {
-    width: 70%;
+  width: 70%;
+}
+
+.ship-form form {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-left: 5%;
+}
+
+.ship-form form label {
+    margin-top: 1rem;
+    font-size: 1.3rem;
+}
+
+.ship-form-btn {
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+  border: 1px solid black;
+  background-color: black;
+  color: white;
+  width: 12rem;
+  height: 2.7rem;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Inconsolata', monospace;
+}
+
+.checkout-total {
+    padding-right: 0;
+    margin-right: 0;
+    color: darkred;
+    margin-left: 1.2rem;
 }

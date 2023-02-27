@@ -15,7 +15,7 @@ const initialState: InitialState = {
     _id: '',
     date: '',
     userId: '',
-    address: '',
+    address: [],
     orders: [],
     total: 0,
     isDelivered: 'Prepare',

@@ -13,6 +13,7 @@ const router = Router();
 
 router.post(
   '/:userId',
+  passport.authenticate('jwt', { session: false }),
   createOrderController
 );
 router.get('/', getOrderListController);

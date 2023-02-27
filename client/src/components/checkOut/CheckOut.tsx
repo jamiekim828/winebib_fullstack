@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import './CheckOut.css';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { cartActions } from '../../redux/slices/cart';
+import { UserData } from '../../types/type';
+import { orderActions } from '../../redux/slices/order';
 
 type FormInput = {
   userName: String;
@@ -23,7 +25,7 @@ export default function CheckOut() {
     handleSubmit,
   } = useForm<FormInput>();
   const dispatch = useDispatch<AppDispatch>()
-  const onSubmit: SubmitHandler<FormInput> = (data) => dispatch(cartActions.getShippingAddress(data));
+  
   const [cart, setCart] = useState<
     {
       productId: string;
@@ -33,10 +35,28 @@ export default function CheckOut() {
       quantity: number;
     }[]
   >([]);
+  
+  const [loginUser, setLoginUSer] = useState<UserData>({_id: '', userName: '', email: '', isAdmin: false})
 
   useEffect(() => {
     setCart(JSON.parse(localStorage.getItem('cart') as string));
+    setLoginUSer(JSON.parse(localStorage.getItem('loginUser') as string))
   }, []);
+  
+  const navigate = useNavigate()
+  const onSubmit: SubmitHandler<FormInput> = (data) => {
+    const newOrder = {
+        userId : loginUser._id,
+        address: [data],
+        orders: cart,
+        total: cart.map(item=>item.price*item.quantity).reduce((a,b)=> a+b)
+    }
+    dispatch(cartActions.getShippingAddress(data));
+    dispatch(cartActions.getCart(cart))
+    dispatch(orderActions.orderByUser(newOrder))
+
+    navigate('/proceed')
+  }
 
   const subPrice = cart.map((c) => c.quantity * c.price);
   const subTotal = subPrice.reduce((a: number, b: number) => a + b, 0);
@@ -44,7 +64,7 @@ export default function CheckOut() {
   return (
     <div className='checkout-container'>
       <div className='checkout-title'>
-        <h1>Chechout</h1>
+        <h1>Checkout</h1>
         <Link to='/all-wine' className='continue'>
           <p>Continue Shopping</p>
         </Link>

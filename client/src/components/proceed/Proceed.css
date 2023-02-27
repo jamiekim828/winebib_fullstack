@@ -1,0 +1,46 @@
+.payment-container {
+  margin-left: 5rem;
+}
+
+.payment-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid darkred;
+  width: 90%;
+}
+
+.radio-div {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: center;
+}
+
+.radio-div div {
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.radio-div img {
+    width: 55px;
+    height: 42px;
+}
+
+.order-pay-div {
+    display: flex;
+}
+
+.your-order {
+    width: 60%;
+}
+
+th {
+  text-align: left;
+}
+
+td {
+  border-bottom: 1px solid darkred;
+}

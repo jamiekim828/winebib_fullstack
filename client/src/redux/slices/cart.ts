@@ -57,6 +57,12 @@ const cartSlice = createSlice({
     },
     getShippingAddress: (state, action)=> {
       state.shippingAddress.push(action.payload)
+    },
+    getCart : (state, action) => {
+      state.cart = action.payload
+    },
+    emptyCart: (state, action) => {
+      state.cart = action.payload
     }
   },
 });

@@ -6,7 +6,17 @@ type InitialState = {
   orderHistory: Order[];
   oneOrder: Order;
   orderHistoryByUser: Order[];
-  
+  userOrder: {
+    userId: string;
+    address: {
+      userName: string; 
+      street: string; 
+      houseNumber: string; 
+      zip: string; city: 
+      string; country: string}[];
+    orders: [];
+    total: number;
+  };
 };
 
 const initialState: InitialState = {
@@ -21,7 +31,12 @@ const initialState: InitialState = {
     isDelivered: 'Prepare',
   },
   orderHistoryByUser: [],
-  
+  userOrder: {
+    userId: '',
+    address: [],
+    orders: [],
+    total: 0
+  },
 };
 
 const orderSlice = createSlice({
@@ -37,9 +52,12 @@ const orderSlice = createSlice({
     getOrderHistoryByUser: (state, action) => {
       state.orderHistoryByUser = action.payload;
     },
-    removeOrderHistory : (state, action) => {
-      state.orderHistoryByUser = action.payload
-    }
+    removeOrderHistory: (state, action) => {
+      state.orderHistoryByUser = action.payload;
+    },
+    orderByUser: (state, action) => {
+      state.userOrder = action.payload
+    },
   },
 });
 

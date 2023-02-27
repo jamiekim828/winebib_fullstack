@@ -33,13 +33,13 @@ export type Order = {
   _id: string;
   userId: string;
   address: {
-      city: string;
-      country: string;
-      houseNumber: string;
-      street: string;
-      userName: string;
-      zip: string;
-    }[];
+    city: string;
+    country: string;
+    houseNumber: string;
+    street: string;
+    userName: string;
+    zip: string;
+  }[];
   date: string;
   orders: {
     productId: string;
@@ -50,4 +50,24 @@ export type Order = {
   }[];
   total: number;
   isDelivered: string;
+};
+
+export type Cart = {
+  userId: string;
+  address: {
+    city: string;
+    country: string;
+    houseNumber: string;
+    street: string;
+    userName: string;
+    zip: string;
+  }[];
+  orders: {
+    image: string;
+    name: string;
+    price: number;
+    productId: string;
+    quantity: number;
+  }[];
+  total: number;
 };

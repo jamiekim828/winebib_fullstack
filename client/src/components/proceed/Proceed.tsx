@@ -15,9 +15,7 @@ import { cartActions } from '../../redux/slices/cart';
 import { useNavigate } from 'react-router-dom';
 
 export default function Proceed() {
-  const message = useSelector(
-    (state: RootState) => state.user.message
-  );
+  const message = useSelector((state: RootState) => state.user.message);
   const [open, setOpen] = useState<boolean>(false);
 
   const loginSuccess = useSelector(
@@ -30,17 +28,17 @@ export default function Proceed() {
     setToken(localStorage.getItem('userToken'));
   }, []);
 
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
   const purchase = () => {
-    dispatch(createOrderByUserId(userOrder.userId, token, userOrder))
-    dispatch(cartActions.emptyCart([]))
-    localStorage.removeItem('cart')
-    setOpen(true)
-  }
-  const navigate = useNavigate()
+    dispatch(createOrderByUserId(userOrder.userId, token, userOrder));
+    dispatch(cartActions.emptyCart([]));
+    localStorage.removeItem('cart');
+    setOpen(true);
+  };
+  const navigate = useNavigate();
   const handleClose = () => {
     setOpen(false);
-    navigate('/')
+    navigate('/');
   };
 
   return (
@@ -72,17 +70,17 @@ export default function Proceed() {
                   <tr>
                     <th>Products:</th>
                     <td>
-                    {userOrder.orders.map(
-                      (p: {
-                        name: string;
-                        price: number;
-                        quantity: number;
-                      }) => (
-                        <p>
-                          {p.name} (${p.price}) x {p.quantity}
+                      {userOrder.orders.map(
+                        (p: {
+                          name: string;
+                          price: number;
+                          quantity: number;
+                        }) => (
+                          <p>
+                            {p.name} (${p.price}) x {p.quantity}
                           </p>
-                      )
-                    )}
+                        )
+                      )}
                     </td>
                   </tr>
                   <tr>
@@ -121,25 +119,27 @@ export default function Proceed() {
                   alt='cash'
                 />
               </div>
-              <button className='ship-form-btn' onClick={purchase}>BUY</button>
+              <button className='ship-form-btn' onClick={purchase}>
+                BUY
+              </button>
               <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby='alert-dialog-title'
-            aria-describedby='alert-dialog-description'
-          >
-            <DialogTitle id='alert-dialog-title'>Message</DialogTitle>
-            <DialogContent>
-              <DialogContentText id='alert-dialog-description'>
-                {message}
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} autoFocus>
-                Close
-              </Button>
-            </DialogActions>
-          </Dialog>
+                open={open}
+                onClose={handleClose}
+                aria-labelledby='alert-dialog-title'
+                aria-describedby='alert-dialog-description'
+              >
+                <DialogTitle id='alert-dialog-title'>Message</DialogTitle>
+                <DialogContent>
+                  <DialogContentText id='alert-dialog-description'>
+                    {message}
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose} autoFocus>
+                    Close
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
           </div>
         </div>

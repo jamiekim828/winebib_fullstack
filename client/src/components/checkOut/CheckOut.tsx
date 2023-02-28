@@ -2,12 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { Button } from '@mui/material';
+
 import './CheckOut.css';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
 import { cartActions } from '../../redux/slices/cart';
 import { UserData } from '../../types/type';
 import { orderActions } from '../../redux/slices/order';
+import { userActions } from '../../redux/slices/user';
 
 type FormInput = {
   userName: String;
@@ -25,6 +33,8 @@ export default function CheckOut() {
     handleSubmit,
   } = useForm<FormInput>();
   const dispatch = useDispatch<AppDispatch>();
+  const message = useSelector((state: RootState) => state.user.message);
+  const [open, setOpen] = useState<boolean>(false);
 
   const [cart, setCart] = useState<
     {
@@ -66,9 +76,14 @@ export default function CheckOut() {
       navigate('/proceed');
     }
     if (!loginUser) {
-      //please login to proceed
-      navigate('/login');
+      dispatch(userActions.messageAction('Please login to proceed'));
+      setOpen(true)
     }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    navigate('/login');
   };
 
   const subPrice = cart.map((c) => c.quantity * c.price);
@@ -108,6 +123,24 @@ export default function CheckOut() {
                 Proceed to checkout
               </button>
             </form>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby='alert-dialog-title'
+              aria-describedby='alert-dialog-description'
+            >
+              <DialogTitle id='alert-dialog-title'>Message</DialogTitle>
+              <DialogContent>
+                <DialogContentText id='alert-dialog-description'>
+                  {message}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} autoFocus>
+                  Close
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </div>
         <div>

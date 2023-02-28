@@ -11,9 +11,12 @@ const getWishlistByUserId = async (id: string): Promise<WishlistDocument[]> => {
 };
 
 const deleteWishlistByUserId = async (
-  id: string
+  userIdFromReq: string, productIdFromReq: string
 ): Promise<WishlistDocument | null> => {
-  return Wishlist.findByIdAndDelete(id);
+    // find user by userId
+    // find product by productId from user's wishes
+    // delete that product from the wishes
+  return Wishlist.findByIdAndDelete();
 };
 
 export default {

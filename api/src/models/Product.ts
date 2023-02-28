@@ -18,7 +18,7 @@ export type ProductDocument = Document & {
 };
 
 const Schema = mongoose.Schema;
-const ProductSchema = new Schema({
+export const ProductSchema = new Schema({
   name: { type: String, required: true },
   country: { type: String, required: true },
   flag: { type: String, required: true },

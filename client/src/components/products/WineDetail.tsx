@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 import './WineDetail.css';
 import { Wine } from '../../types/type';
@@ -30,7 +31,10 @@ export default function WineDetail({ wine }: Prop) {
   return (
     <div className='wine-detail'>
       <div>
+        <div className=' star'>
+        <StarBorderIcon sx={{marginTop: '.5rem'}}/>
         <p className='wine-name'>{wine.name}</p>
+        </div>
         <div className='wine-img-div'>
           <Link to={`/wine/${wine._id}`}>
             <img

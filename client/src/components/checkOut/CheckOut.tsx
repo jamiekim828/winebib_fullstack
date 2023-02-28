@@ -24,8 +24,8 @@ export default function CheckOut() {
     formState: { errors },
     handleSubmit,
   } = useForm<FormInput>();
-  const dispatch = useDispatch<AppDispatch>()
-  
+  const dispatch = useDispatch<AppDispatch>();
+
   const [cart, setCart] = useState<
     {
       productId: string;
@@ -35,28 +35,41 @@ export default function CheckOut() {
       quantity: number;
     }[]
   >([]);
-  
-  const [loginUser, setLoginUSer] = useState<UserData>({_id: '', userName: '', email: '', isAdmin: false})
+
+  const [loginUser, setLoginUSer] = useState<UserData>({
+    _id: '',
+    userName: '',
+    email: '',
+    isAdmin: false,
+  });
 
   useEffect(() => {
     setCart(JSON.parse(localStorage.getItem('cart') as string));
-    setLoginUSer(JSON.parse(localStorage.getItem('loginUser') as string))
+    setLoginUSer(JSON.parse(localStorage.getItem('loginUser') as string));
   }, []);
-  
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    const newOrder = {
-        userId : loginUser._id,
+    if (loginUser) {
+      const newOrder = {
+        userId: loginUser._id,
         address: [data],
         orders: cart,
-        total: cart.map(item=>item.price*item.quantity).reduce((a,b)=> a+b)
-    }
-    dispatch(cartActions.getShippingAddress(data));
-    dispatch(cartActions.getCart(cart))
-    dispatch(orderActions.orderByUser(newOrder))
+        total: cart
+          .map((item) => item.price * item.quantity)
+          .reduce((a, b) => a + b),
+      };
+      dispatch(cartActions.getShippingAddress(data));
+      dispatch(cartActions.getCart(cart));
+      dispatch(orderActions.orderByUser(newOrder));
 
-    navigate('/proceed')
-  }
+      navigate('/proceed');
+    }
+    if (!loginUser) {
+      //please login to proceed
+      navigate('/login');
+    }
+  };
 
   const subPrice = cart.map((c) => c.quantity * c.price);
   const subTotal = subPrice.reduce((a: number, b: number) => a + b, 0);

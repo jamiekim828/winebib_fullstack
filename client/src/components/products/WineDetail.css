@@ -29,3 +29,7 @@
 .wine-img-div:hover .add-cart {
     opacity: 1;
 }
+
+.star {
+  align-items: center;
+}

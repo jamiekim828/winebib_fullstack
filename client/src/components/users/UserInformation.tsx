@@ -83,8 +83,6 @@ export default function UserInformation() {
     )
   );
 
-  console.log(rows);
-
   return (
     <div>
       <div className='user-div'>

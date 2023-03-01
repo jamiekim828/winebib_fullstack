@@ -71,3 +71,8 @@ export type Cart = {
   }[];
   total: number;
 };
+
+export type Wish = {
+  userId: string;
+  wishes: Wine[]
+}

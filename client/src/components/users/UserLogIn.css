@@ -1,10 +1,13 @@
 .user-page {
-  padding: 3rem;
+  margin-left: 5rem;
 }
 
-.user-page h1 {
-  color: #8b0000;
-  font-weight: 900;
+.user-page-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid darkred;
+  width: 90%;
 }
 
 .user-div {
@@ -16,9 +19,8 @@
 .login-div {
   font-size: 1.5rem;
   width: 40%;
-  padding-right: 3rem;
+  padding-right: 2rem;
   border-right: 1px solid black;
-  margin-left: 3rem;
 }
 
 .register-div {

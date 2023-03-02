@@ -130,9 +130,9 @@ export default function NavBar({userTok}: Prop) {
                 loginSuccess === true ? 'info' : 'error'
               }
               badgeContent={
-                loginSuccess === true ? 'v' : 'x'
+                loginSuccess === true ? '✔' : 'x'
               }
-              sx={{ marginRight: '1.2rem' }}
+              sx={{ marginRight: '1.2rem', fontWeight: '900', color: 'white' }}
             >
               <PersonOutlineIcon
                 sx={{

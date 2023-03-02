@@ -15,7 +15,12 @@ const initialState: InitialState = {
 const wishlistSlice = createSlice({
     name: 'wishlist',
     initialState,
-    reducers: {}
+    reducers: {
+        getWishlistByUserId: (state, action) => {
+            console.log(action.payload, 'from wishlisSlice')
+            state.userWishlist = action.payload
+        }
+    }
 })
 
 export const wishlistActions = wishlistSlice.actions;

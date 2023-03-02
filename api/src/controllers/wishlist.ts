@@ -21,7 +21,7 @@ export const createWishlistController = async (req: Request, res: Response) => {
     const wish = await WishlistServices.createWishlist(newWish);
     return res
       .status(200)
-      .json({ wish, messaage: 'The product is saved in the wishlist' });
+      .json({ wish, message: 'The product is saved in the wishlist' });
   } catch (err) {
     res.status(500).json('Server error');
   }

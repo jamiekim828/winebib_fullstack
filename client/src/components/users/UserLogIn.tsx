@@ -46,9 +46,7 @@ const RegisterSchema = Yup.object().shape({
 });
 
 export default function UserLogIn() {
-  const message = useSelector(
-    (state: RootState) => state.user.message
-  );
+  const message = useSelector((state: RootState) => state.user.message);
   const [open, setOpen] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -60,9 +58,9 @@ export default function UserLogIn() {
     }
     if (user) {
       dispatch(loginUserThunk(user));
-      setOpen(true)
+      setOpen(true);
     }
-    setOpen(true)
+    setOpen(true);
   };
 
   const registerHandler = (user: User) => {
@@ -73,17 +71,19 @@ export default function UserLogIn() {
       dispatch(registerUserThunk(user));
       setOpen(true);
     }
-    setOpen(true)
+    setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-    navigate('/')
+    navigate('/');
   };
 
   return (
     <div className='user-page'>
-      <h1>My account</h1>
+      <div className='user-page-title'>
+        <h1>My account</h1>
+      </div>
       <div className='user-div'>
         <div className='login-div'>
           <h3>Log in</h3>

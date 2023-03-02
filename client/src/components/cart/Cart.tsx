@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Button } from '@mui/material';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+
 import './Cart.css';
 import { AppDispatch, RootState } from '../../redux/store';
 import { Link, useNavigate } from 'react-router-dom';
@@ -24,7 +27,35 @@ export default function Cart() {
         </Link>
       </div>
       {cart.length === 0 ? (
-        <p>Your cart is empty</p>
+        <div className='empty'>
+        <div className='link-login'>
+          <div className='icon-login'>
+          <RemoveShoppingCartIcon sx={{marginRight: '.2rem'}}/>
+          <Link to='/login' style={{color: 'darkred', fontSize: '18px', fontWeight: '900'}}>Login/Register</Link>
+          </div>
+          <h4>
+            to store products in your account and view them from anywhere
+          </h4>
+        </div>
+        <RemoveShoppingCartIcon sx={{ fontSize: '80px', color: 'grey' }} />
+        <h2 style={{ color: 'grey' }}>Your wishlist is currently empty.</h2>
+        <p>Save your wishes and we will save them for you.</p>
+        <Link to='/all-wine' style={{textDecoration: 'none'}}>
+        <Button
+          sx={{
+            color: 'darkred',
+            backgroundColor: 'white',
+            marginTop: '2rem',
+            ':hover' : {
+              backgroundColor: 'darkred',
+              color: 'white'
+            }
+          }}
+        >
+          Go Shopping
+        </Button>
+        </Link>
+      </div>
       ) : (
         <div className='cart'>
           <div className='cart-list'>

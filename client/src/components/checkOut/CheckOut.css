@@ -16,7 +16,7 @@
 }
 
 .shipping-div {
-  width: 70%;
+  width: 75%;
 }
 
 .ship-form form {
@@ -24,16 +24,27 @@
   flex-direction: column;
   width: 80%;
   margin-left: 5%;
+  background-color: seashell;
+  padding-left: 6rem;
+  padding-top: 2rem;
+  border-radius: 20px;
+  margin-bottom: 3%;
 }
 
 .ship-form form label {
     margin-top: 1rem;
+    margin-bottom: .3rem;
     font-size: 1.3rem;
+}
+
+.ship-form form input {
+  height: 33px;
+  width: 80%;
 }
 
 .ship-form-btn {
   margin-top: 2rem;
-  margin-bottom: 5rem;
+  margin-bottom: 3.3rem;
   border: 1px solid black;
   background-color: black;
   color: white;
@@ -51,3 +62,22 @@
     color: darkred;
     margin-left: 1.2rem;
 }
+
+.your-order {
+  margin-left: 7rem;
+}
+
+.your-order div {
+  width: 70%;
+  padding-left: 2rem;
+  background-color: seashell;
+  border-radius: 20px;
+ 
+}
+
+.order-content {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.3rem;
+}
+

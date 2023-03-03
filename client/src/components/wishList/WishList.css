@@ -16,27 +16,25 @@
 }
 
 .empty {
-    width: 90%;
-    text-align: center;
-    margin-top: 1rem;
-    margin-right: 5rem;
-    height: 390px;
+  width: 90%;
+  text-align: center;
+  margin-top: 1rem;
+  margin-right: 5rem;
+  height: 390px;
 }
 
 .link-login {
-    width: 95%;
-    height: 60px;
-    margin-bottom: 3rem;
-    background-color: seashell;
-    display: flex;
-    justify-content: center;
-    align-item: center;
+  width: 95%;
+  height: 60px;
+  margin-bottom: 3rem;
+  background-color: seashell;
+  display: flex;
+  justify-content: center;
 }
 
 .icon-login {
-    display: flex;
-    align-item: center;
-   margin-top: 1.3rem;
-   margin-right: .3rem;
-   color: darkred;
+  display: flex;
+  margin-top: 1.3rem;
+  margin-right: 0.3rem;
+  color: darkred;
 }

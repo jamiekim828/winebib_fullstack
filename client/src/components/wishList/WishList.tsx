@@ -9,14 +9,15 @@ import { getWishlistByUserThunk } from '../../redux/thunks/wishlist';
 import './WishList.css';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import WishListItem from './WishListItem';
 
 export default function WishList() {
   const user = useSelector((state: RootState) => state.user.loginUser);
   const userWishData = useSelector(
     (state: RootState) => state.wishlist.userWishlist
   );
-  const wishlist = userWishData.wishes;
-  console.log(wishlist, 'component');
+  const wishlist = userWishData[0].wishes;
+  console.log(userWishData, wishlist, 'component');
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getWishlistByUserThunk(user._id));
@@ -59,7 +60,7 @@ export default function WishList() {
             </Link>
           </div>
         ) : (
-          <></>
+          wishlist.map(wish => <div><WishListItem wish={wish}/></div>)
         )}
       </div>
     </div>

@@ -23,11 +23,11 @@
 }
 
 .add-cart {
-    opacity: 0;
+  opacity: 0;
 }
 
 .wine-img-div:hover .add-cart {
-    opacity: 1;
+  opacity: 1;
 }
 
 .star {

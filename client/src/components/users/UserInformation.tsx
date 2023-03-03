@@ -17,6 +17,7 @@ import { getOrderHistoryByUserData } from '../../redux/thunks/order';
 import { userActions } from '../../redux/slices/user';
 import { logoutUser } from '../../redux/thunks/user';
 import { orderActions } from '../../redux/slices/order';
+import { wishlistActions } from '../../redux/slices/wishlist';
 
 function createData(
   orderId: string,
@@ -59,6 +60,7 @@ export default function UserInformation() {
     dispatch(logoutUser());
     dispatch(userActions.loginSuccessAction(false))
     dispatch(orderActions.removeOrderHistory([]));
+    dispatch(wishlistActions.removeWishlist([]))
     navigate('/');
   };
 

@@ -143,28 +143,28 @@ export default function CheckOut() {
             </Dialog>
           </div>
         </div>
-        <div>
+        <div className='your-order'>
           <h2>Your Order</h2>
           <div>
             {cart.map((c, index) => (
-              <div key={index}>
+              <div key={index} className='flex order-content'>
                 <p>
                   {c.name} x {c.quantity}
                 </p>
                 <p>${c.quantity * c.price}</p>
               </div>
             ))}
-            <div className='flex'>
+            <div className='flex order-content'>
               <p>Subtotal</p>
-              <h4 className='checkout-total'>$ {subTotal}</h4>
+              <h4 className='checkout-total'>${subTotal}</h4>
             </div>
-            <div className='flex'>
+            <div className='flex order-content'>
               <p>Shipping</p>
               <h4 className='checkout-total'>FREE</h4>
             </div>
-            <div className='flex'>
+            <div className='flex order-content'>
               <p>Total</p>
-              <h4 className='checkout-total'>$ {subTotal}</h4>
+              <h4 className='checkout-total'>${subTotal}</h4>
             </div>
           </div>
         </div>

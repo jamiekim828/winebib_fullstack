@@ -2,14 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Wish } from '../../types/type';
 
 type InitialState = {
-    userWishlist: Wish;
+    userWishlist: Wish[];
 }
 
 const initialState: InitialState = {
-    userWishlist: {
+    userWishlist: [{
         userId: '',
         wishes: []
-    }
+    }]
 }
 
 const wishlistSlice = createSlice({
@@ -19,6 +19,9 @@ const wishlistSlice = createSlice({
         getWishlistByUserId: (state, action) => {
             console.log(action.payload, 'from wishlisSlice')
             state.userWishlist = action.payload
+        },
+        removeWishlist: (state, action) => {
+            state.userWishlist[0].wishes = action.payload
         }
     }
 })

@@ -1,20 +1,20 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
+import { cartActions } from '../../redux/slices/cart';
+import { Wine } from '../../types/type';
+import { AppDispatch } from '../../redux/store';
 
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
-import './WineDetail.css';
-import { Wine } from '../../types/type';
-import { AppDispatch } from '../../redux/store';
-import { cartActions } from '../../redux/slices/cart';
-
 type Prop = {
-  wine: Wine;
+  wish: Wine;
 };
 
-export default function WineDetail({ wine }: Prop) {
+export default function WishListItem({ wish }: Prop) {
   const dispatch = useDispatch<AppDispatch>();
   const addToCart = (product: Wine) => {
     dispatch(
@@ -27,9 +27,9 @@ export default function WineDetail({ wine }: Prop) {
       })
     );
   };
-
+  console.log(wish);
   return (
-    <div className='wine-detail'>
+    <div>
       <div>
         <div className=' star'>
           <StarBorderIcon
@@ -40,13 +40,13 @@ export default function WineDetail({ wine }: Prop) {
               cursor: 'pointer',
             }}
           />
-          <p className='wine-name'>{wine.name}</p>
+          <p className='wine-name'>{wish.name}</p>
         </div>
         <div className='wine-img-div'>
-          <Link to={`/wine/${wine._id}`}>
+          <Link to={`/wine/${wish._id}`}>
             <img
-              src={`${wine.image}`}
-              alt={`${wine.name}`}
+              src={`${wish.image}`}
+              alt={`${wish.name}`}
               className='wine-img'
             />
           </Link>
@@ -57,7 +57,7 @@ export default function WineDetail({ wine }: Prop) {
               aria-label='add'
             >
               <AddIcon
-                onClick={() => addToCart(wine)}
+                onClick={() => addToCart(wish)}
                 sx={{
                   color: 'white',
                   '&:hover': {
@@ -69,11 +69,11 @@ export default function WineDetail({ wine }: Prop) {
           </div>
         </div>
         <p>
-          {wine.region}, {wine.country}
+          {wish.region}, {wish.country}
         </p>
       </div>
       <div className='wine-price'>
-        <p>${wine.price.toFixed(2)}</p>
+        <p>${wish.price.toFixed(2)}</p>
       </div>
     </div>
   );

@@ -4,8 +4,6 @@ import passport from 'passport';
 import {
   createOrderController,
   getOrderListByUserIdController,
-  updateOrderByIdController,
-  deleteOrderByIdController,
   getOrderListController,
 } from '../controllers/order';
 
@@ -22,9 +20,5 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   getOrderListByUserIdController
 );
-
-// router.delete('/:id', deleteOrderByIdController);
-// router.put('/:id', updateOrderByIdController);
-
 
 export default router;

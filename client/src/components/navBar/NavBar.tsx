@@ -54,7 +54,10 @@ export default function NavBar({ userTok }: Prop) {
   React.useEffect(() => {
     setUserToken(userTok);
     // dispatch(wishlistActions.getWishlistByUserId(loginUser._id))
-    dispatch(getWishlistByUserThunk(loginUser._id))
+    if(!userToken) {
+      return;
+    }
+    dispatch(getWishlistByUserThunk(loginUser._id, userToken))
   }, []);
 
   const list = () => (

@@ -8,11 +8,12 @@ import WishlistServices from '../services/wishlist';
 export const createWishlistController = async (req: Request, res: Response) => {
   try {
     const { userId, productId } = req.params;
+    const {product} = req.body;
 
     const wishData = await Product.findById(productId);
     const user = await User.findById(userId);
     const existWishlist: WishlistDocument | null = await Wishlist.findOne({
-      userId
+      userId,
     });
 
     if (!user) {
@@ -29,7 +30,10 @@ export const createWishlistController = async (req: Request, res: Response) => {
       const wish = await WishlistServices.createWishlist(newWish);
       return res
         .status(200)
-        .json({ wishlist: wish, message: 'The product is saved in the wishlist' });
+        .json({
+          wishlist: wish,
+          message: 'The product is saved in the wishlist',
+        });
     }
     const index = existWishlist.wishes.findIndex(
       (item: ProductDocument) => item._id.toString() === productId
@@ -42,7 +46,10 @@ export const createWishlistController = async (req: Request, res: Response) => {
       const wish = await WishlistServices.createWishlist(existWishlist);
       return res
         .status(200)
-        .json({ wishlist: wish, message: 'The product is saved in the wishlist' });
+        .json({
+          wishlist: wish,
+          message: 'The product is saved in the wishlist',
+        });
     }
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
@@ -83,12 +90,13 @@ export const deleteWishlistByProductIdController = async (
     if (!existWishlist) {
       return res.status(400).json({ message: 'something went wrong' });
     }
-    
-  
-    existWishlist.wishes = existWishlist.wishes.filter((item)=> item._id.toString() !== productId)
-    existWishlist.save()
-    return res.status(200).json({ message: 'Product is deleted from the wishlist'})
-   
+    existWishlist.wishes = existWishlist.wishes.filter(
+      (item) => item._id.toString() !== productId
+    );
+    existWishlist.save();
+    return res
+      .status(200)
+      .json({ message: 'Product is deleted from the wishlist' });
   } catch (err) {
     res.status(500).json(err);
   }

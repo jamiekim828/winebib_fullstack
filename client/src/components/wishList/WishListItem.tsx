@@ -29,7 +29,7 @@ export default function WishListItem({ wish }: Prop) {
   };
   console.log(wish);
   return (
-    <div>
+    <div style={{marginRight:'2.5rem'}}>
       <div>
         <div className=' star'>
           <StarBorderIcon
@@ -48,6 +48,7 @@ export default function WishListItem({ wish }: Prop) {
               src={`${wish.image}`}
               alt={`${wish.name}`}
               className='wine-img'
+              style={{marginLeft: '0px'}}
             />
           </Link>
           <div className='add-cart'>

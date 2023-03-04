@@ -1,16 +1,15 @@
 import { Router } from 'express';
-import passport from 'passport';
 
 import {
   createWishlistController,
   getWishlistByUserIdController,
-  deleteWishlistByIdController,
+  deleteWishlistByProductIdController
 } from '../controllers/wishlist';
 
 const router = Router()
 
 router.post('/:userId/:productId', createWishlistController)
 router.get('/:userId', getWishlistByUserIdController)
-router.delete('/:userId/:productId', deleteWishlistByIdController)
+router.delete('/:userId/:productId', deleteWishlistByProductIdController)
 
 export default router

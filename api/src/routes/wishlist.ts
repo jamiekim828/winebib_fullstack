@@ -9,8 +9,8 @@ import {
 
 const router = Router()
 
-router.post('/:userId', createWishlistController)
+router.post('/:userId/:productId', createWishlistController)
 router.get('/:userId', getWishlistByUserIdController)
-router.delete('/:userId/:priductId', deleteWishlistByIdController)
+router.delete('/:userId/:productId', deleteWishlistByIdController)
 
 export default router

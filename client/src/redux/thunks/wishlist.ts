@@ -13,3 +13,10 @@ export function getWishlistByUserThunk(userId:string) {
         dispatch(wishlistActions.getWishlistByUserId(wishlist))
     }
 }
+
+export function deleteWishByProductId(userId:string, productId:string) {
+    return async (dispatch:AppDispatch) => {
+        const response = await axios.delete(`${url}/${userId}/${productId}`)
+        console.log(response.data)
+    }
+}

@@ -17,12 +17,16 @@ const wishlistSlice = createSlice({
     initialState,
     reducers: {
         getWishlistByUserId: (state, action) => {
-            console.log(action.payload, 'from wishlisSlice')
+            console.log(action.payload, 'from wishliSlice')
             state.userWishlist = action.payload
         },
         removeWishlist: (state, action) => {
             state.userWishlist[0].wishes = action.payload
+        },
+        deleteWishlistItem: (state, action) => {
+            state.userWishlist = action.payload
         }
+
     }
 })
 

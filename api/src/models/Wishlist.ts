@@ -1,11 +1,11 @@
 import mongoose, { Document } from 'mongoose';
 
 import User from './User';
-import { ProductSchema } from './Product';
+import { ProductDocument, ProductSchema } from './Product';
 
 export type WishlistDocument = Document & {
   userId: string;
-  wishes: [];
+  wishes: ProductDocument[];
 };
 
 const Schema = mongoose.Schema;

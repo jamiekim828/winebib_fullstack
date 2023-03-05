@@ -3,13 +3,15 @@ import { Wish } from '../../types/type';
 
 type InitialState = {
     userWishlist: Wish[];
+    wishMessage: string;
 }
 
 const initialState: InitialState = {
     userWishlist: [{
         userId: '',
         wishes: []
-    }]
+    }],
+    wishMessage: ''
 }
 
 const wishlistSlice = createSlice({
@@ -17,14 +19,17 @@ const wishlistSlice = createSlice({
     initialState,
     reducers: {
         getWishlistByUserId: (state, action) => {
-            console.log(action.payload, 'from wishliSlice')
             state.userWishlist = action.payload
         },
         removeWishlist: (state, action) => {
+            console.log(action.payload, 'remove slice')
             state.userWishlist[0].wishes = action.payload
         },
         deleteWishlistItem: (state, action) => {
-            state.userWishlist = action.payload
+            state.userWishlist.push(action.payload)
+        },
+        getWishMessage: (state, action) => {
+            state.wishMessage = action.payload
         }
 
     }

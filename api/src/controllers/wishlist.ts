@@ -39,7 +39,7 @@ export const createWishlistController = async (req: Request, res: Response) => {
       (item: ProductDocument) => item._id.toString() === productId
     );
     if (index !== -1) {
-      return res.status(200).json({ message: 'Product exist' });
+      return res.status(200).json({ message: 'You have already saved this product in your wishlist.' });
     }
     if (index === -1) {
       existWishlist.wishes.push(wishData);
@@ -96,7 +96,7 @@ export const deleteWishlistByProductIdController = async (
     existWishlist.save();
     return res
       .status(200)
-      .json({ message: 'Product is deleted from the wishlist' });
+      .json({ wishlist: existWishlist, message: 'Product is deleted from the wishlist' });
   } catch (err) {
     res.status(500).json(err);
   }

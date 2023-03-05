@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -6,20 +6,60 @@ import Rating from '@mui/material/Rating';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 import './ProductDescription.css';
 import { AppDispatch, RootState } from '../../redux/store';
 import { getOneWineThunk } from '../../redux/thunks/wine';
 import { Wine } from '../../types/type';
 import { cartActions } from '../../redux/slices/cart';
+import { createWishlistByUserThunk } from '../../redux/thunks/wishlist';
+import { wishlistActions } from '../../redux/slices/wishlist';
 
 export function ProductDescription() {
   const wine = useSelector((state: RootState) => state.wine.oneWine);
-  const id = useParams().id;
+  const id = useParams().id as string;
+  const user = useSelector((state: RootState) => state.user.loginUser);
+  const token = localStorage.getItem('userToken') as string;
+  const wishMessage = useSelector(
+    (state: RootState) => state.wishlist.wishMessage
+  );
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(getOneWineThunk(id));
   }, [dispatch, id]);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const action = (
+    <React.Fragment>
+      <IconButton
+        size='small'
+        aria-label='close'
+        color='inherit'
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize='small' />
+      </IconButton>
+    </React.Fragment>
+  );
 
   const breadcrumbs = [
     <Link underline='hover' key='1' color='inherit' href='/'>
@@ -33,6 +73,15 @@ export function ProductDescription() {
     </Typography>,
   ];
 
+  const addWishHandler = (
+    userId: string,
+    productId: string,
+    product: Wine,
+    token: string
+  ) => {
+    dispatch(createWishlistByUserThunk(userId, productId, product, token));
+  };
+
   const addToCart = (product: Wine) => {
     dispatch(
       cartActions.addToCartAction({
@@ -43,6 +92,8 @@ export function ProductDescription() {
         quantity: 1,
       })
     );
+    dispatch(wishlistActions.getWishMessage('Product is added to the cart.'));
+    handleClick();
   };
 
   return (
@@ -109,10 +160,27 @@ export function ProductDescription() {
           <div>
             <p>Price : ${wine.price.toFixed(2)}</p>
           </div>
-          <button className='wish-btn'>Wishlist</button>
+
+          <button
+            className='wish-btn'
+            onClick={() => {
+              addWishHandler(user._id, id, wine, token);
+              setOpen(true);
+              handleClick();
+            }}
+          >
+            Wishlist
+          </button>
           <button className='add-btn' onClick={() => addToCart(wine)}>
             Add to cart
           </button>
+          <Snackbar
+            open={open}
+            autoHideDuration={2000}
+            onClose={handleClose}
+            message={wishMessage}
+            action={action}
+          />
         </div>
       </div>
     </div>

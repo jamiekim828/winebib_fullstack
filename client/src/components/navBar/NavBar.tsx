@@ -128,7 +128,7 @@ export default function NavBar({ userTok }: Prop) {
             fontWeight: '800',
           }}
         >
-          Winebib
+          WineBieb.
         </Link>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Link to={loginSuccess === true ? '/account' : '/login'}>

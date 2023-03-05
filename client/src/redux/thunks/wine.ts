@@ -9,7 +9,6 @@ export function getAllWines() {
     return async (dispatch:AppDispatch) => {
         const response = await axios.get(`${url}/product`)
         const wineData = await response.data
-        console.log(wineData)
         dispatch(wineActions.getWienList(wineData))
     }
 }

@@ -32,7 +32,7 @@ export default function Footer() {
             <h3>Sparkling</h3>
           </div>
           <div className='column' style={{borderRight:'1px solid', paddingRight: '5rem'}}>
-            <p>WINEBIB</p>
+            <p>WINEBIEB.</p>
             <h3>About</h3>
             <h3>Contact</h3>
             <h3>Shipping</h3>
@@ -59,8 +59,8 @@ export default function Footer() {
           </div>
         </div>
         <div className='footer-bottom'>
-          <h1>Winebib</h1>
-          <p>©2023 Winebib</p>
+          <h1 style={{fontFamily: 'Rampart One',}}>WineBieb.</h1>
+          <p>©2023 WineBieb.</p>
           <p>ALL RIGHTS RESERVED</p>
         </div>
       </div>

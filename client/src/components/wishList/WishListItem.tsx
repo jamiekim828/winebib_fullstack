@@ -1,20 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-
-import { cartActions } from '../../redux/slices/cart';
-import { Wine } from '../../types/type';
-import { AppDispatch } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
+import ClearIcon from '@mui/icons-material/Clear';
+
+import { cartActions } from '../../redux/slices/cart';
+import { Wine } from '../../types/type';
+import { AppDispatch, RootState } from '../../redux/store';
+import { deleteWishByProductId } from '../../redux/thunks/wishlist';
+import { wishlistActions } from '../../redux/slices/wishlist';
 
 type Prop = {
   wish: Wine;
+  handleClick: Function;
 };
 
-export default function WishListItem({ wish }: Prop) {
+export default function WishListItem({ wish, handleClick }: Prop) {
+  const user = useSelector((state: RootState) => state.user.loginUser);
+  const token = localStorage.getItem('userToken') as string;
   const dispatch = useDispatch<AppDispatch>();
   const addToCart = (product: Wine) => {
     dispatch(
@@ -26,18 +31,31 @@ export default function WishListItem({ wish }: Prop) {
         quantity: 1,
       })
     );
+    dispatch(wishlistActions.getWishMessage('Product added to the cart.'));
   };
-  console.log(wish);
+  const deleteHandler = (
+    userId: string,
+    productId: string,
+    product: Wine,
+    token: string
+  ) => {
+    dispatch(deleteWishByProductId(userId, productId, product, token));
+  };
+
   return (
-    <div style={{marginRight:'2.5rem'}}>
+    <div style={{ marginLeft: '1rem' }}>
       <div>
         <div className=' star'>
-          <StarBorderIcon
+          <ClearIcon
             sx={{
               marginTop: '.5rem',
               color: 'darkred',
               fontSize: '30px',
               cursor: 'pointer',
+            }}
+            onClick={() => {
+              deleteHandler(user._id, wish._id, wish, token);
+              handleClick();
             }}
           />
           <p className='wine-name'>{wish.name}</p>
@@ -48,7 +66,7 @@ export default function WishListItem({ wish }: Prop) {
               src={`${wish.image}`}
               alt={`${wish.name}`}
               className='wine-img'
-              style={{marginLeft: '0px'}}
+              style={{ marginLeft: '2rem' }}
             />
           </Link>
           <div className='add-cart'>
@@ -58,7 +76,13 @@ export default function WishListItem({ wish }: Prop) {
               aria-label='add'
             >
               <AddIcon
-                onClick={() => addToCart(wish)}
+                onClick={() => {
+                  addToCart(wish);
+                  handleClick();
+                  dispatch(
+                    deleteWishByProductId(user._id, wish._id, wish, token)
+                  );
+                }}
                 sx={{
                   color: 'white',
                   '&:hover': {

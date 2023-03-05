@@ -10,7 +10,7 @@ import './WineDetail.css';
 import { Wine } from '../../types/type';
 import { AppDispatch, RootState } from '../../redux/store';
 import { cartActions } from '../../redux/slices/cart';
-import { createWishlistByUserThunk } from '../../redux/thunks/wishlist';
+import { createWishlistByUserThunk, deleteWishByProductId } from '../../redux/thunks/wishlist';
 import { useState } from 'react';
 
 type Prop = {
@@ -34,10 +34,24 @@ export default function WineDetail({ wine }: Prop) {
     );
   };
 
-  const wishHandler = (userId: string, productId: string, product: Wine, token: string) => {
+  const addWishHandler = (
+    userId: string,
+    productId: string,
+    product: Wine,
+    token: string
+  ) => {
     dispatch(createWishlistByUserThunk(userId, productId, product, token));
     setStarClick(!starClick);
   };
+
+  const removeWishHandler = (
+    userId: string,
+    productId: string,
+    product: Wine,
+    token: string) => {
+      dispatch(deleteWishByProductId(userId, productId, product, token));
+      setStarClick(!starClick);
+    }
 
   return (
     <div className='wine-detail'>
@@ -51,7 +65,7 @@ export default function WineDetail({ wine }: Prop) {
                 fontSize: '30px',
                 cursor: 'pointer',
               }}
-              onClick={() => wishHandler(user._id, wine._id, wine, token)}
+              onClick={() => addWishHandler(user._id, wine._id, wine, token)}
             />
           ) : (
             <StarIcon
@@ -61,7 +75,7 @@ export default function WineDetail({ wine }: Prop) {
                 fontSize: '30px',
                 cursor: 'pointer',
               }}
-              onClick={() => wishHandler(user._id, wine._id, wine, token)}
+              onClick={() => removeWishHandler(user._id, wine._id, wine, token)}
             />
           )}
 

@@ -24,21 +24,39 @@ export function createWishlistByUserThunk(
   token: string
 ) {
   return async (dispatch: AppDispatch) => {
-    console.log(userId, productId, token)
-    const response = await axios.post(`${url}/${userId}/${productId}`,product, {
+    if (
+      token === undefined ||
+      token === null ||
+      userId === '' ||
+      userId === undefined
+    ) {
+      dispatch(
+        wishlistActions.getWishMessage('Please log in to save the wishlist')
+      );
+    }
+    const response = await axios.post(
+      `${url}/${userId}/${productId}`,
+      product,
+      {
         headers: { Authorization: `Bearer ${token}` },
-    });
-    console.log(response.data, 'thunk')
+      }
+    );
+    dispatch(wishlistActions.getWishMessage(response.data.message));
   };
 }
 
 export function deleteWishByProductId(
   userId: string,
   productId: string,
+  product: Wine,
   token: string
 ) {
   return async (dispatch: AppDispatch) => {
-    const response = await axios.delete(`${url}/${userId}/${productId}`);
-    console.log(response.data);
+    const response = await axios.delete(`${url}/${userId}/${productId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    dispatch(wishlistActions.deleteWishlistItem(response.data.wishlist));
+    dispatch(wishlistActions.getWishMessage(response.data.message))
+    
   };
 }

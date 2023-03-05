@@ -102,7 +102,7 @@ export default function CheckOut() {
           <h2>Shipping Details</h2>
           <div className='ship-form'>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <label>User name</label>
+              <label>Ship to</label>
               <input {...register('userName')} />
               <label>Street *</label>
               <input {...register('street', { required: true })} />

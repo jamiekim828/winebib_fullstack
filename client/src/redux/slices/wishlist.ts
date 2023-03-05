@@ -22,7 +22,6 @@ const wishlistSlice = createSlice({
             state.userWishlist = action.payload
         },
         removeWishlist: (state, action) => {
-            console.log(action.payload, 'remove slice')
             state.userWishlist[0].wishes = action.payload
         },
         deleteWishlistItem: (state, action) => {

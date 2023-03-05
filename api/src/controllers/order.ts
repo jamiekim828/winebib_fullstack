@@ -15,7 +15,6 @@ export const createOrderController = async (req: Request, res: Response) => {
     const newOrder = new Order({
       ...orderData, userId: user._id
     });
-    console.log(newOrder)
     const order = await OrderServices.createOrder(newOrder);
     return res.status(200).json({order, message: 'Thank you for order! We will let you know when shipping is ready'});
   } catch (err) {

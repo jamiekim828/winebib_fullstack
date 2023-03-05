@@ -15,9 +15,10 @@ import { useState } from 'react';
 
 type Prop = {
   wine: Wine;
+  wishlist: {userId: string, wishes: Wine[]}[];
 };
 
-export default function WineDetail({ wine }: Prop) {
+export default function WineDetail({ wine, wishlist }: Prop) {
   const user = useSelector((state: RootState) => state.user.loginUser);
   const [starClick, setStarClick] = useState<boolean>(false);
   const token = localStorage.getItem('userToken') as string;
@@ -33,6 +34,11 @@ export default function WineDetail({ wine }: Prop) {
       })
     );
   };
+
+  const isWineInWishlist = (productId: string) => {
+    return wishlist[0].wishes.some(item=> item._id === productId)
+
+  }
 
   const addWishHandler = (
     userId: string,
@@ -57,17 +63,7 @@ export default function WineDetail({ wine }: Prop) {
     <div className='wine-detail'>
       <div>
         <div className=' star'>
-          {starClick === false ? (
-            <StarBorderIcon
-              sx={{
-                marginTop: '.5rem',
-                color: 'darkred',
-                fontSize: '30px',
-                cursor: 'pointer',
-              }}
-              onClick={() => addWishHandler(user._id, wine._id, wine, token)}
-            />
-          ) : (
+          {isWineInWishlist(wine._id) === true || starClick === true ? (
             <StarIcon
               sx={{
                 marginTop: '.5rem',
@@ -76,6 +72,16 @@ export default function WineDetail({ wine }: Prop) {
                 cursor: 'pointer',
               }}
               onClick={() => removeWishHandler(user._id, wine._id, wine, token)}
+            />
+          ) :(
+            <StarBorderIcon
+              sx={{
+                marginTop: '.5rem',
+                color: 'darkred',
+                fontSize: '30px',
+                cursor: 'pointer',
+              }}
+              onClick={() => addWishHandler(user._id, wine._id, wine, token)}
             />
           )}
 

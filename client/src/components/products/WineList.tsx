@@ -57,7 +57,7 @@ export default function WineList() {
       
       {wineList.map((wine, index) => (
         <Grid key={index} {...colWidth} minHeight={200} >
-          <WineDetail wine={wine} />
+          <WineDetail wine={wine} wishlist={wishlist}/>
         </Grid>
         
       ))}

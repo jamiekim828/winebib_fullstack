@@ -15,6 +15,7 @@ import { User } from '../../types/type';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
 import { loginUserThunk, registerUserThunk } from '../../redux/thunks/user';
+import { wishlistActions } from '../../redux/slices/wishlist';
 
 const LogInSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Email is required'),

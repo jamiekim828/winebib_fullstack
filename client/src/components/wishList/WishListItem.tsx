@@ -33,6 +33,7 @@ export default function WishListItem({ wish, handleClick }: Prop) {
     );
     dispatch(wishlistActions.getWishMessage('Product added to the cart.'));
   };
+
   const deleteHandler = (
     userId: string,
     productId: string,

@@ -18,6 +18,7 @@ import { userActions } from '../../redux/slices/user';
 import { logoutUser } from '../../redux/thunks/user';
 import { orderActions } from '../../redux/slices/order';
 import { wishlistActions } from '../../redux/slices/wishlist';
+import { cartActions } from '../../redux/slices/cart';
 
 function createData(
   orderId: string,
@@ -61,6 +62,7 @@ export default function UserInformation() {
     dispatch(userActions.loginSuccessAction(false))
     dispatch(orderActions.removeOrderHistory([]));
     dispatch(wishlistActions.removeWishlist([]))
+    dispatch(cartActions.emptyCart([]))
     navigate('/');
   };
 

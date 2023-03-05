@@ -34,12 +34,12 @@ export default function Cart() {
           <Link to='/login' style={{color: 'darkred', fontSize: '18px', fontWeight: '900'}}>Login/Register</Link>
           </div>
           <h4>
-            to store products in your account and view them from anywhere
+            to make an order.
           </h4>
         </div>
         <RemoveShoppingCartIcon sx={{ fontSize: '80px', color: 'grey' }} />
-        <h2 style={{ color: 'grey' }}>Your wishlist is currently empty.</h2>
-        <p>Save your wishes and we will save them for you.</p>
+        <h2 style={{ color: 'grey' }}>Your cart is currently empty.</h2>
+        <p>Register and login to get 20% off code.</p>
         <Link to='/all-wine' style={{textDecoration: 'none'}}>
         <Button
           sx={{

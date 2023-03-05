@@ -6,6 +6,7 @@ import { Wine } from '../../types/type';
 type InitialState = {
   wine: Wine[];
   oneWine: Wine;
+  filteredList: Wine[];
 };
 
 const initialState: InitialState = {
@@ -20,12 +21,13 @@ const initialState: InitialState = {
     image: '',
     name: '',
     pairing: [],
-    price: 0,    
+    price: 0,
     region: '',
-    sweet: 0,    
+    sweet: 0,
     use: [],
     _id: '',
-  }
+  },
+  filteredList: [],
 };
 
 const wineSlice = createSlice({
@@ -37,7 +39,12 @@ const wineSlice = createSlice({
     },
     getOneWine: (state, action) => {
       state.oneWine = action.payload;
-    }
+    },
+    filterWine: (state, action) => {
+      state.filteredList = state.wine.filter(
+        (wine) => wine.color.toLowerCase() === action.payload.toLowerCase()
+      );
+    },
   },
 });
 

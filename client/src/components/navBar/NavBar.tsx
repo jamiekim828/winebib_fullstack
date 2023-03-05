@@ -21,6 +21,7 @@ import Badge from '@mui/material/Badge';
 import { AppDispatch, RootState } from '../../redux/store';
 import { getWishlistByUserThunk } from '../../redux/thunks/wishlist';
 import { wishlistActions } from '../../redux/slices/wishlist';
+import { wineActions } from '../../redux/slices/wine';
 
 type Prop = {
   userTok: string | null;
@@ -50,14 +51,14 @@ export default function NavBar({ userTok }: Prop) {
     setState(open);
   };
 
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
   React.useEffect(() => {
     setUserToken(userTok);
     // dispatch(wishlistActions.getWishlistByUserId(loginUser._id))
-    if(!userToken) {
+    if (!userToken) {
       return;
     }
-    dispatch(getWishlistByUserThunk(loginUser._id, userToken))
+    dispatch(getWishlistByUserThunk(loginUser._id, userToken));
   }, []);
 
   const list = () => (
@@ -78,7 +79,13 @@ export default function NavBar({ userTok }: Prop) {
                 <ListItemIcon>
                   {<WineBarIcon sx={{ color: '#b71c1c' }} />}
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText
+                  primary={text}
+                  onClick={() => {
+                    dispatch(wineActions.filterWine(text));
+                    console.log(text);
+                  }}
+                />
               </ListItemButton>
             </Link>
           </ListItem>

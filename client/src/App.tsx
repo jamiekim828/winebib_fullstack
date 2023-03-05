@@ -19,6 +19,7 @@ import CheckOut from './components/checkOut/CheckOut';
 import Proceed from './components/proceed/Proceed';
 import { AppDispatch, RootState } from './redux/store';
 import { getWishlistByUserThunk } from './redux/thunks/wishlist';
+import FilteredWineList from './components/products/FilteredWineList';
 
 function App() {
   const token = localStorage.getItem('userToken') as string;
@@ -37,6 +38,9 @@ function App() {
           <Route path='/login' element={<UserLogIn />} />
           <Route path='/account' element={<UserInformation />} />
           <Route path='/all-wine' element={<WineList />} />
+          <Route path='/red' element={<FilteredWineList />} />
+          <Route path='/white' element={<FilteredWineList />} />
+          <Route path='/sparkling' element={<FilteredWineList />} />
           <Route path='/wine/:id' element={<ProductDescription />} />
           <Route path='/wishlist' element={<WishList />} />
           <Route path='/cart' element={<Cart />} />

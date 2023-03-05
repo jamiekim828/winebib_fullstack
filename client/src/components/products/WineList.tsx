@@ -7,7 +7,6 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-
 import { AppDispatch, RootState } from '../../redux/store';
 import { getAllWines } from '../../redux/thunks/wine';
 import WineDetail from './WineDetail';

@@ -94,7 +94,7 @@ export default function WineList() {
     </Grid>
     <Snackbar
         open={open}
-        autoHideDuration={2000}
+        autoHideDuration={3000}
         onClose={handleClose}
         message={wishMessage}
         action={action}

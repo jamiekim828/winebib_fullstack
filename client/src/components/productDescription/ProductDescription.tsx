@@ -176,7 +176,7 @@ export function ProductDescription() {
           </button>
           <Snackbar
             open={open}
-            autoHideDuration={2000}
+            autoHideDuration={3000}
             onClose={handleClose}
             message={wishMessage}
             action={action}

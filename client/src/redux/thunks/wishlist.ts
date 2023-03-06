@@ -31,7 +31,7 @@ export function createWishlistByUserThunk(
       userId === undefined
     ) {
       dispatch(
-        wishlistActions.getWishMessage('Please log in to save the wishlist')
+        wishlistActions.getWishMessage('You need to be logged in to create or edit your wishlist')
       );
     }
     const response = await axios.post(

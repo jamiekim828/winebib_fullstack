@@ -29,18 +29,20 @@
     font-weight: 700;
     font-family: 'Inconsolata', monospace;
     color: #8B0000;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: white;
   }
   
   .main-btn {
     display: inline-block;
-    font-family: sans-serif;
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 700;
     letter-spacing: 1.5px;
     padding: 11px 30px;
     background-color: #8B0000;
     background-image: linear-gradient(to bottom,#8B0000,#000);
     color: #fff;
+    font-family: 'Inconsolata', monospace;
     text-transform: uppercase;
     text-decoration: none;
   }

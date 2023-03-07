@@ -4,3 +4,84 @@
     font-family: 'Inconsolata', monospace;
     background-color: #FFEBCD;
 }
+
+.about-container {
+    
+    width: 100vw;
+    height: 700px;
+}
+
+.about-title {
+    margin-left: 5rem;
+    margin-right: 5rem;
+    border-bottom: 1px solid darkred;
+
+}
+
+.about-div {
+    margin-left: 8.5%;
+    width: 90%;
+    height: 80%;
+    background-repeat: no-repeat;
+    background-image: url("https://d39l2hkdp2esp1.cloudfront.net/img/photo/194877/194877_00_2x.jpg");
+}
+
+.about-div h2,
+.about-div h3 {
+    margin-left: 3%;
+    padding-top: 3%;
+    color: darkred;
+}
+
+.snowfall{
+  background: url(https://i.imgur.com/T0mBFg2.png);
+  background-size: 350px 200px;
+  background-repeat: repeat;
+  height: 80%;
+  width: 90%;
+  position:relative;
+  bottom: 493px;
+  border-radius: 50%;
+  animation:snowfall 5s linear forwards infinite; 
+  -webkit-animation:snowfall 5s linear forwards infinite; 
+}
+@keyframes snowfall{
+  0%{
+    background-position: 0 0;
+  }
+  20%{
+    background-position: 20px 20px;
+  }
+  40%{
+    background-position: 40px 40px;
+  }
+  60%{
+    background-position: 60px 60px;
+  }
+  80%{
+    background-position: 80px 80px;
+  }
+  100%{
+    background-position: 100px 100px;
+  }
+}
+@-webkit-keyframes snowfall{
+  0%{
+    background-position: 0 0;
+  }
+  20%{
+    background-position: 20px 20px;
+  }
+  40%{
+    background-position: 40px 40px;
+  }
+  60%{
+    background-position: 60px 60px;
+  }
+  80%{
+    background-position: 80px 80px;
+  }
+  100%{
+    background-position: 100px 100px;
+  }
+}

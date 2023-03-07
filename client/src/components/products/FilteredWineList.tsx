@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -8,7 +7,6 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { wineActions } from '../../redux/slices/wine';
 import { AppDispatch, RootState } from '../../redux/store';
 import { getWishlistByUserThunk } from '../../redux/thunks/wishlist';
 import WineDetail from './WineDetail';

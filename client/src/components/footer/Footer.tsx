@@ -1,9 +1,10 @@
-import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import './Footer.css';
 import image from '../../assets/images/home5.webp';
 
 export default function Footer() {
+ 
   return (
     <div className='subscribe-div'>
       <div
@@ -26,16 +27,49 @@ export default function Footer() {
         <div className='footer'>
           <div className='column'>
             <p>SHOP</p>
-            <h3>All wine</h3>
+            <NavLink
+              to='/all-wine'
+              style={{ textDecoration: 'none', color: 'darkred' }}
+            >
+              <h3>All wine</h3>
+            </NavLink>
+            <NavLink
+              to='/red'
+              style={{ textDecoration: 'none', color: 'darkred' }}
+            >
             <h3>Red</h3>
+            </NavLink>
+            <NavLink
+              to='/white'
+              style={{ textDecoration: 'none', color: 'darkred' }}
+            >
             <h3>White</h3>
+            </NavLink>
+            <NavLink
+              to='/sparkling'
+              style={{ textDecoration: 'none', color: 'darkred' }}
+            >
             <h3>Sparkling</h3>
+            </NavLink>
           </div>
-          <div className='column' style={{borderRight:'1px solid', paddingRight: '5rem'}}>
+          <div
+            className='column'
+            style={{ borderRight: '1px solid', paddingRight: '5rem' }}
+          >
             <p>WINEBIEB.</p>
+            <NavLink
+              to='/about'
+              style={{ textDecoration: 'none', color: 'darkred' }}
+            >
             <h3>About</h3>
+            </NavLink>
+            <NavLink
+              to='/contact'
+              style={{ textDecoration: 'none', color: 'darkred' }}
+            >
             <h3>Contact</h3>
-            <h3>Shipping</h3>
+            </NavLink>
+            
           </div>
           <div className='column'>
             <p>ADDRESS & HOURS</p>
@@ -59,7 +93,7 @@ export default function Footer() {
           </div>
         </div>
         <div className='footer-bottom'>
-          <h1 style={{fontFamily: 'Rampart One',}}>WineBieb.</h1>
+          <h1 style={{ fontFamily: 'Rampart One' }}>WineBieb.</h1>
           <p>©2023 WineBieb.</p>
           <p>ALL RIGHTS RESERVED</p>
         </div>

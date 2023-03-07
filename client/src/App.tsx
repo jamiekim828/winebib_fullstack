@@ -13,7 +13,6 @@ import UserInformation from './components/users/UserInformation';
 import Contact from './pages/Contact';
 import About from './pages/About';
 import Cart from './components/cart/Cart';
-import Location from './pages/Location';
 import { ProductDescription } from './components/productDescription/ProductDescription';
 import CheckOut from './components/checkOut/CheckOut';
 import Proceed from './components/proceed/Proceed';
@@ -48,7 +47,7 @@ function App() {
           <Route path='/proceed' element={<Proceed />} />
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
-          <Route path='/location' element={<Location />} />
+         
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -93,7 +93,7 @@ export default function NavBar({ userTok }: Prop) {
       </List>
       <Divider />
       <List>
-        {['About', 'Contact', 'Location'].map((text) => (
+        {['About', 'Contact'].map((text) => (
           <ListItem key={text} disablePadding>
             <Link
               to={`/${text.toLowerCase()}`}

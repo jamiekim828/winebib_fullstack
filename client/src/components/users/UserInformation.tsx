@@ -59,10 +59,10 @@ export default function UserInformation() {
   const navigate = useNavigate();
   const logOut = () => {
     dispatch(logoutUser());
-    dispatch(userActions.loginSuccessAction(false))
+    dispatch(userActions.loginSuccessAction(false));
     dispatch(orderActions.removeOrderHistory([]));
-    dispatch(wishlistActions.removeWishlist([]))
-    dispatch(cartActions.emptyCart([]))
+    dispatch(wishlistActions.removeWishlist([]));
+    dispatch(cartActions.emptyCart([]));
     navigate('/');
   };
 
@@ -116,7 +116,10 @@ export default function UserInformation() {
               <h1>My history</h1>
               <h3>Order history</h3>
               <div>
-                <TableContainer component={Paper} sx={{ width: 800 }}>
+                <TableContainer
+                  component={Paper}
+                  sx={{ width: 800, backgroundColor: 'seashell' }}
+                >
                   <Table
                     sx={{ minWidth: 650 }}
                     size='small'
@@ -124,12 +127,39 @@ export default function UserInformation() {
                   >
                     <TableHead>
                       <TableRow>
-                        <TableCell>Id</TableCell>
-                        <TableCell align='right'>Date</TableCell>
-                        <TableCell align='right'>Products</TableCell>
-                        <TableCell align='right'>Total</TableCell>
-                        <TableCell align='right'>Address</TableCell>
-                        <TableCell align='right'>Status</TableCell>
+                        <TableCell sx={{ fontFamily: 'Inconsolata' }}>
+                          Id
+                        </TableCell>
+                        <TableCell
+                          sx={{ fontFamily: 'Inconsolata' }}
+                          align='right'
+                        >
+                          Date
+                        </TableCell>
+                        <TableCell
+                          sx={{ fontFamily: 'Inconsolata' }}
+                          align='right'
+                        >
+                          Products
+                        </TableCell>
+                        <TableCell
+                          sx={{ fontFamily: 'Inconsolata' }}
+                          align='right'
+                        >
+                          Total
+                        </TableCell>
+                        <TableCell
+                          sx={{ fontFamily: 'Inconsolata' }}
+                          align='right'
+                        >
+                          Address
+                        </TableCell>
+                        <TableCell
+                          sx={{ fontFamily: 'Inconsolata' }}
+                          align='right'
+                        >
+                          Status
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -169,11 +199,11 @@ export default function UserInformation() {
                             </TableCell>
                             <TableCell align='left'>$ {row.total}</TableCell>
                             <TableCell align='right' className='shipping-cell'>
-                              To: {row.shipping[0].userName}<br/>
-                                {row.shipping[0].street}{' '}
-                                {row.shipping[0].houseNumber},{' '}
-                                {row.shipping[0].city},{' '}
-                                {row.shipping[0].country}
+                              To: {row.shipping[0].userName}
+                              <br />
+                              {row.shipping[0].street}{' '}
+                              {row.shipping[0].houseNumber},{' '}
+                              {row.shipping[0].city}, {row.shipping[0].country}
                             </TableCell>
                             <TableCell align='right'>{row.status}</TableCell>
                           </TableRow>

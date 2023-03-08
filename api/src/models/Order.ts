@@ -41,7 +41,7 @@ const OrderSchema = new Schema({
   total: Number,
   isDelivered: {
     type: String,
-    enum: ['Prepare', 'shipped', 'Delivered'],
+    enum: ['Prepare', 'Shipped', 'Delivered'],
     default: 'Prepare',
   },
 });

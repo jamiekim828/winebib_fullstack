@@ -14,7 +14,7 @@ import {
   createWishlistByUserThunk,
   deleteWishByProductId,
 } from '../../redux/thunks/wishlist';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { wishlistActions } from '../../redux/slices/wishlist';
 
 type Prop = {
@@ -38,12 +38,20 @@ export default function WineDetail({ wine, wishlist, handleClick }: Prop) {
         quantity: 1,
       })
     );
-    dispatch(wishlistActions.getWishMessage('Product is added to the cart.'))
+    dispatch(deleteWishByProductId(user._id, product._id, product, token));
+    setStarClick(!starClick);
+    dispatch(wishlistActions.getWishMessage('Product is added to the cart.'));
   };
 
   const isWineInWishlist = (productId: string) => {
     return wishlist[0].wishes.some((item) => item._id === productId);
   };
+
+  useEffect(
+    () =>
+      isWineInWishlist(wine._id) ? setStarClick(true) : setStarClick(false),
+    []
+  );
 
   const addWishHandler = (
     userId: string,

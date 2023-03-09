@@ -111,7 +111,7 @@ export default function UserLogIn() {
                 ) : null}
                 <input
                   placeholder='password'
-                  type='text'
+                  type='password'
                   name='password'
                   onChange={handleChange}
                 />

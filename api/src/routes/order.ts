@@ -14,7 +14,7 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   createOrderController
 );
-router.get('/', getOrderListController);
+// router.get('/', getOrderListController);
 router.get(
   '/:userId',
   passport.authenticate('jwt', { session: false }),
